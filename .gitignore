@@ -132,3 +132,6 @@ dmypy.json
 # data
 .mid
 .npy
+.npz
+.pkl
+.zip
