@@ -1,2 +1,2 @@
 
-This folder contains the data used for `Baseline` experiment.
+This folder contains the data used for `no-pretrained transformer` experiment.
