@@ -1,8 +1,7 @@
 import sys
 import os
-
 import ipdb
-
+from tqdm import tqdm
 import math
 import time
 import glob
@@ -11,520 +10,117 @@ import random
 import pickle
 import json
 import numpy as np
+from collections import OrderedDict
+from argparse import ArgumentParser
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 import torch.optim as optim
 from torch.nn.utils import clip_grad_norm_
 from torch.utils.data import Dataset, DataLoader
 
-from fast_transformers.builders import TransformerEncoderBuilder
-from fast_transformers.builders import RecurrentEncoderBuilder
-from fast_transformers.masking import TriangularCausalMask
-
-import miditoolkit
-from miditoolkit.midi.containers import Marker, Instrument, TempoChange, Note
 
 import saver
+from models import TransformerModel, network_paras
+from utils import write_midi, get_random_string
 
 
 ################################################################################
 # config
 ################################################################################
 
-MODE = 'train' 
-# MODE = 'inference' 
+parser = ArgumentParser()
+parser.add_argument("--mode",default="train",type=str,choices=["train", "inference"])
+parser.add_argument("--task_type",default="4-cls",type=str,choices=['4-cls', 'Arousal', 'Valence', 'ignore'])
+parser.add_argument("--gid", default= 0, type=int)
+parser.add_argument("--data_parallel", default= 0, type=int)
+
+parser.add_argument("--exp_name", default='0422-1637' , type=str)
+parser.add_argument("--load_ckt", default="0309-1857", type=str)   #pre-train model
+parser.add_argument("--load_ckt_loss", default="30", type=str)     #pre-train model
+parser.add_argument("--path_train_data", default='emopia', type=str)  
+parser.add_argument("--data_root", default='../dataset/co-representation/', type=str)
+parser.add_argument("--load_dict", default="more_dictionary.pkl", type=str)
+parser.add_argument("--init_lr", default= 0.00001, type=float)
+# inference config
+### python main-cp.py --mode inference --load_ckt 0309-1857 --load_ckt_loss 50 --num_songs 5 --emo_tag 1
+
+parser.add_argument("--num_songs", default=5, type=int)
+parser.add_argument("--emo_tag", default=1, type=int)
+parser.add_argument("--out_dir", default='none', type=str)
+args = parser.parse_args()
+
+print('=== args ===')
+for arg in args.__dict__:
+    print(arg, args.__dict__[arg])
+print('=== args ===')
+# time.sleep(10)    #sleep to check again if args are right
+
+
+MODE = args.mode
+task_type = args.task_type
+
 
 ###--- data ---###
-path_data_root = '../dataset/co-representation/'
-# path_data_root = '../dataset_wayne/representations/'
-path_train_data = os.path.join(path_data_root, 'joanna_train_data_linear.npz')
-path_dictionary =  os.path.join(path_data_root, 'dictionary.pkl')
+path_data_root = args.data_root
+
+path_train_data = os.path.join(path_data_root, args.path_train_data + '_data_linear.npz')
+path_dictionary =  os.path.join(path_data_root, args.load_dict)
+path_train_idx = os.path.join(path_data_root, args.path_train_data + '_fn2idx_map.json')
+path_train_data_cls_idx = os.path.join(path_data_root, args.path_train_data + '_data_idx.npz')
+
+assert os.path.exists(path_train_data)
+assert os.path.exists(path_dictionary)
+assert os.path.exists(path_train_idx)
+
+# if the dataset has the emotion label, get the cls_idx for the dataloader
+if args.path_train_data == 'emopia':    
+    assert os.path.exists(path_train_data_cls_idx)
 
 ###--- training config ---###
-D_MODEL = 512
-N_LAYER = 12  
-N_HEAD = 8    
-path_exp = 'exp/0302-1427'
-batch_size = 4
-gid = 0
-init_lr = 0.00001   #0.0001
+ 
+if MODE == 'train':
+    path_exp = 'exp/' + args.exp_name
+
+if args.data_parallel > 0:
+    batch_size = 8
+else:
+    batch_size = 4      #4
+
+gid = args.gid
+init_lr = args.init_lr   #0.0001
 
 
 ###--- fine-tuning & inference config ---###
-#info_load_model = None
-info_load_model = (
-     # path to ckpt for loading
-     'exp/0227-1205',
-     # loss
-     '30'                               
-     )
+if args.load_ckt == 'none':
+    info_load_model = None
+    print('NO pre-trained model used')
 
-# path_gendir = os.path.join(path_exp, 'gen_midis', 'loss_25')
-num_songs = 5
-emotion_tag = 4
+else:
+    info_load_model = (
+        # path to ckpt for loading
+        'exp/' + args.load_ckt,
+        # loss
+        args.load_ckt_loss                               
+        )
+
+
+if args.out_dir == 'none':
+    path_gendir = os.path.join('exp/' + args.load_ckt, 'gen_midis', 'loss_'+ args.load_ckt_loss)
+else:
+    path_gendir = args.out_dir
+
+num_songs = args.num_songs
+emotion_tag = args.emo_tag
+
+
 ################################################################################
 # File IO
 ################################################################################
 
-os.environ['CUDA_VISIBLE_DEVICES'] = str(gid)
-BEAT_RESOL = 480
-BAR_RESOL = BEAT_RESOL * 4
-TICK_RESOL = BEAT_RESOL // 4
-
-
-def write_midi(words, path_outfile, word2event):
-    
-    class_keys = word2event.keys()
-    # words = np.load(path_infile)
-    midi_obj = miditoolkit.midi.parser.MidiFile()
-
-    bar_cnt = 0
-    cur_pos = 0
-
-    all_notes = []
-
-    cnt_error = 0
-    for i in range(len(words)):
-        vals = []
-        for kidx, key in enumerate(class_keys):
-            vals.append(word2event[key][words[i][kidx]])
-        # print(vals)
-
-        if vals[3] == 'Metrical':
-            if vals[2] == 'Bar':
-                bar_cnt += 1
-            elif 'Beat' in vals[2]:
-                beat_pos = int(vals[2].split('_')[1])
-                cur_pos = bar_cnt * BAR_RESOL + beat_pos * TICK_RESOL
-
-                # chord
-                if vals[1] != 'CONTI' and vals[1] != 0:
-                    midi_obj.markers.append(
-                        Marker(text=str(vals[1]), time=cur_pos))
-
-                if vals[0] != 'CONTI' and vals[0] != 0:
-                    tempo = int(vals[0].split('_')[-1])
-                    midi_obj.tempo_changes.append(
-                        TempoChange(tempo=tempo, time=cur_pos))
-            else:
-                pass
-        elif vals[3] == 'Note':
-
-            try:
-                pitch = vals[4].split('_')[-1]
-                duration = vals[5].split('_')[-1]
-                velocity = vals[6].split('_')[-1]
-                
-                if int(duration) == 0:
-                    duration = 60
-                end = cur_pos + int(duration)
-                
-                all_notes.append(
-                    Note(
-                        pitch=int(pitch), 
-                        start=cur_pos, 
-                        end=end, 
-                        velocity=int(velocity))
-                    )
-            except:
-                continue
-        else:
-            pass
-    
-    # save midi
-    piano_track = Instrument(0, is_drum=False, name='piano')
-    piano_track.notes = all_notes
-    midi_obj.instruments = [piano_track]
-    midi_obj.dump(path_outfile)
-
-
-################################################################################
-# Sampling
-################################################################################
-# -- temperature -- #
-def softmax_with_temperature(logits, temperature):
-    probs = np.exp(logits / temperature) / np.sum(np.exp(logits / temperature))
-    return probs
-
-
-def weighted_sampling(probs):
-    probs /= sum(probs)
-    sorted_probs = np.sort(probs)[::-1]
-    sorted_index = np.argsort(probs)[::-1]
-    word = np.random.choice(sorted_index, size=1, p=sorted_probs)[0]
-    return word
-
-
-# -- nucleus -- #
-def nucleus(probs, p):
-    probs /= (sum(probs) + 1e-5)
-    sorted_probs = np.sort(probs)[::-1]
-    sorted_index = np.argsort(probs)[::-1]
-    cusum_sorted_probs = np.cumsum(sorted_probs)
-    after_threshold = cusum_sorted_probs > p
-    if sum(after_threshold) > 0:
-        last_index = np.where(after_threshold)[0][0] + 1
-        candi_index = sorted_index[:last_index]
-    else:
-        candi_index = sorted_index[:]
-    candi_probs = [probs[i] for i in candi_index]
-    candi_probs /= sum(candi_probs)
-    word = np.random.choice(candi_index, size=1, p=candi_probs)[0]
-    return word
-
-
-def sampling(logit, p=None, t=1.0):
-    logit = logit.squeeze().cpu().numpy()
-    probs = softmax_with_temperature(logits=logit, temperature=t)
-    
-    if p is not None:
-        cur_word = nucleus(probs, p=p)
-    else:
-        cur_word = weighted_sampling(probs)
-    return cur_word
-
-
-################################################################################
-# Model
-################################################################################
-
-
-def network_paras(model):
-    # compute only trainable params
-    model_parameters = filter(lambda p: p.requires_grad, model.parameters())
-    params = sum([np.prod(p.size()) for p in model_parameters])
-    return params
-
-
-class Embeddings(nn.Module):
-    def __init__(self, n_token, d_model):
-        super(Embeddings, self).__init__()
-        self.lut = nn.Embedding(n_token, d_model)
-        self.d_model = d_model
-
-    def forward(self, x):
-        return self.lut(x) * math.sqrt(self.d_model)
-
-
-class PositionalEncoding(nn.Module):
-    def __init__(self, d_model, dropout=0.1, max_len=20000):
-        super(PositionalEncoding, self).__init__()
-        self.dropout = nn.Dropout(p=dropout)
-
-        pe = torch.zeros(max_len, d_model)
-        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
-        pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
-        pe = pe.unsqueeze(0)
-        self.register_buffer('pe', pe)
-
-    def forward(self, x):
-        x = x + self.pe[:, :x.size(1), :]
-        return self.dropout(x)
-
-
-class TransformerModel(nn.Module):
-    def __init__(self, n_token, is_training=True):
-        super(TransformerModel, self).__init__()
-
-        # --- params config --- #
-        self.n_token = n_token     # == n_class
-        self.d_model = D_MODEL 
-        self.n_layer = N_LAYER #
-        self.dropout = 0.1
-        self.n_head = N_HEAD #
-        self.d_head = D_MODEL // N_HEAD
-        self.d_inner = 2048
-        self.loss_func = nn.CrossEntropyLoss(reduction='none')
-        self.emb_sizes = [128, 256, 64, 32, 512, 128, 128, 128]   #128
-
-        # --- modules config --- #
-        # embeddings
-        print('>>>>>:', self.n_token)
-        self.word_emb_tempo     = Embeddings(self.n_token[0], self.emb_sizes[0])
-        self.word_emb_chord     = Embeddings(self.n_token[1], self.emb_sizes[1])
-        self.word_emb_barbeat   = Embeddings(self.n_token[2], self.emb_sizes[2])
-        self.word_emb_type      = Embeddings(self.n_token[3], self.emb_sizes[3])
-        self.word_emb_pitch     = Embeddings(self.n_token[4], self.emb_sizes[4])
-        self.word_emb_duration  = Embeddings(self.n_token[5], self.emb_sizes[5])
-        self.word_emb_velocity  = Embeddings(self.n_token[6], self.emb_sizes[6])
-        self.word_emb_emotion  = Embeddings(self.n_token[7], self.emb_sizes[7])
-        self.pos_emb            = PositionalEncoding(self.d_model, self.dropout)
-
-        # linear 
-        self.in_linear = nn.Linear(np.sum(self.emb_sizes), self.d_model)
-
-         # encoder
-        if is_training:
-            # encoder (training)
-            self.transformer_encoder = TransformerEncoderBuilder.from_kwargs(
-                n_layers=self.n_layer,
-                n_heads=self.n_head,
-                query_dimensions=self.d_model//self.n_head,
-                value_dimensions=self.d_model//self.n_head,
-                feed_forward_dimensions=2048,
-                activation='gelu',
-                dropout=0.1,
-                attention_type="causal-linear",
-            ).get()
-        else:
-            # encoder (inference)
-            print(' [o] using RNN backend.')
-            self.transformer_encoder = RecurrentEncoderBuilder.from_kwargs(
-                n_layers=self.n_layer,
-                n_heads=self.n_head,
-                query_dimensions=self.d_model//self.n_head,
-                value_dimensions=self.d_model//self.n_head,
-                feed_forward_dimensions=2048,
-                activation='gelu',
-                dropout=0.1,
-                attention_type="causal-linear",
-            ).get()
-
-        # blend with type
-        self.project_concat_type = nn.Linear(self.d_model + 32, self.d_model)
-
-        # individual output
-        self.proj_tempo    = nn.Linear(self.d_model, self.n_token[0])        
-        self.proj_chord    = nn.Linear(self.d_model, self.n_token[1])
-        self.proj_barbeat  = nn.Linear(self.d_model, self.n_token[2])
-        self.proj_type     = nn.Linear(self.d_model, self.n_token[3])
-        self.proj_pitch    = nn.Linear(self.d_model, self.n_token[4])
-        self.proj_duration = nn.Linear(self.d_model, self.n_token[5])
-        self.proj_velocity = nn.Linear(self.d_model, self.n_token[6])
-        self.proj_emotion = nn.Linear(self.d_model, self.n_token[7])
-        
-
-    def compute_loss(self, predict, target, loss_mask):
-        loss = self.loss_func(predict, target)
-        loss = loss * loss_mask
-        loss = torch.sum(loss) / torch.sum(loss_mask)
-        return loss
-
-    def train_step(self, x, target, loss_mask):
-        h, y_type  = self.forward_hidden(x)
-        y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion = self.forward_output(h, target)
-         
-        # reshape (b, s, f) -> (b, f, s)
-        y_tempo     = y_tempo[:, ...].permute(0, 2, 1)
-        y_chord     = y_chord[:, ...].permute(0, 2, 1)
-        y_barbeat   = y_barbeat[:, ...].permute(0, 2, 1)
-        y_type      = y_type[:, ...].permute(0, 2, 1)
-        y_pitch     = y_pitch[:, ...].permute(0, 2, 1)
-        y_duration  = y_duration[:, ...].permute(0, 2, 1)
-        y_velocity  = y_velocity[:, ...].permute(0, 2, 1)
-        y_emotion   = y_emotion[:, ...].permute(0, 2, 1)
-        
-        # loss
-        loss_tempo = self.compute_loss(
-                y_tempo, target[..., 0], loss_mask)
-        loss_chord = self.compute_loss(
-                y_chord, target[..., 1], loss_mask)
-        loss_barbeat = self.compute_loss(
-                y_barbeat, target[..., 2], loss_mask)
-        loss_type = self.compute_loss(
-                y_type,  target[..., 3], loss_mask)
-        loss_pitch = self.compute_loss(
-                y_pitch, target[..., 4], loss_mask)
-        loss_duration = self.compute_loss(
-                y_duration, target[..., 5], loss_mask)
-        loss_velocity = self.compute_loss(
-                y_velocity, target[..., 6], loss_mask)
-        loss_emotion = self.compute_loss(
-                y_emotion,  target[..., 7], loss_mask)
-
-        return loss_tempo, loss_chord, loss_barbeat, loss_type, loss_pitch, loss_duration, loss_velocity, loss_emotion
-
-    def forward_hidden(self, x, memory=None, is_training=True):
-        '''
-        linear transformer: b x s x f
-        x.shape=(bs, nf)
-        '''
-    
-        # embeddings
-        emb_tempo =    self.word_emb_tempo(x[..., 0])
-        emb_chord =    self.word_emb_chord(x[..., 1])
-        emb_barbeat =  self.word_emb_barbeat(x[..., 2])
-        emb_type =     self.word_emb_type(x[..., 3])
-        emb_pitch =    self.word_emb_pitch(x[..., 4])
-        emb_duration = self.word_emb_duration(x[..., 5])
-        emb_velocity = self.word_emb_velocity(x[..., 6])
-        emb_emotion = self.word_emb_emotion(x[..., 7])
-
-        embs = torch.cat(
-            [
-                emb_tempo,
-                emb_chord,
-                emb_barbeat,
-                emb_type,
-                emb_pitch,
-                emb_duration,
-                emb_velocity,
-                emb_emotion
-            ], dim=-1)
-
-        emb_linear = self.in_linear(embs)
-        pos_emb = self.pos_emb(emb_linear)
-
-        # assert False
-    
-        # transformer
-        if is_training:
-            # mask
-            attn_mask = TriangularCausalMask(pos_emb.size(1), device=x.device)
-            h = self.transformer_encoder(pos_emb, attn_mask) # y: b x s x d_model
-
-            # project type
-            y_type = self.proj_type(h)
-            
-
-            return h, y_type
-        else:
-            pos_emb = pos_emb.squeeze(0)
-            h, memory = self.transformer_encoder(pos_emb, memory=memory) # y: s x d_model
-            
-            # project type
-            y_type = self.proj_type(h)
-            return h, y_type, memory
-
-    def forward_output(self, h, y):
-        '''
-        for training
-        '''
-        # tf_skip_emption = self.word_emb_emotion(y[..., 7])
-        tf_skip_type = self.word_emb_type(y[..., 3])
-
-        # project other
-        y_concat_type = torch.cat([h, tf_skip_type], dim=-1)
-        y_  = self.project_concat_type(y_concat_type)
-
-        y_tempo    = self.proj_tempo(y_)
-        y_chord    = self.proj_chord(y_)
-        y_barbeat  = self.proj_barbeat(y_)
-        y_pitch    = self.proj_pitch(y_)
-        y_duration = self.proj_duration(y_)
-        y_velocity = self.proj_velocity(y_)
-        y_emotion = self.proj_emotion(y_)
-
-        return  y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion
-
-    def froward_output_sampling(self, h, y_type):
-        '''
-        for inference
-        '''
-        # sample type
-        y_type_logit = y_type[0, :]
-        cur_word_type = sampling(y_type_logit, p=0.90)
-
-        type_word_t = torch.from_numpy(
-                    np.array([cur_word_type])).long().cuda().unsqueeze(0)
-
-        tf_skip_type = self.word_emb_type(type_word_t).squeeze(0)
-        
-
-        # concat
-        y_concat_type = torch.cat([h, tf_skip_type], dim=-1)
-        y_  = self.project_concat_type(y_concat_type)
-
-        # project other
-        y_tempo    = self.proj_tempo(y_)
-        y_chord    = self.proj_chord(y_)
-        y_barbeat  = self.proj_barbeat(y_)
-
-        y_pitch    = self.proj_pitch(y_)
-        y_duration = self.proj_duration(y_)
-        y_velocity = self.proj_velocity(y_)
-        y_emotion = self.proj_emotion(y_)
-        
-        # sampling gen_cond
-        cur_word_tempo =    sampling(y_tempo, t=1.2, p=0.9)
-        cur_word_barbeat =  sampling(y_barbeat, t=1.2)
-        cur_word_chord =    sampling(y_chord, p=0.99)
-        cur_word_pitch =    sampling(y_pitch, p=0.9)
-        cur_word_duration = sampling(y_duration, t=2, p=0.9)
-        cur_word_velocity = sampling(y_velocity, t=5)        
-        cur_word_emotion = 0
-        # collect
-        next_arr = np.array([
-            cur_word_tempo,
-            cur_word_chord,
-            cur_word_barbeat,
-            cur_word_type,
-            cur_word_pitch,
-            cur_word_duration,
-            cur_word_velocity,
-            cur_word_emotion
-            ])        
-        print(next_arr.shape)
-        
-        return next_arr, y_emotion
-
-    def inference_from_scratch(self, dictionary, emotion_tag):
-        event2word, word2event = dictionary
-        classes = word2event.keys()
-        
-        
-        def print_word_cp(cp):
-            result = [word2event[k][cp[idx]] for idx, k in enumerate(classes)]
-
-            for r in result:
-                print('{:15s}'.format(str(r)), end=' | ')
-            print('')
-
-        target_emotion = [0, 0, 0, 1, 0, 0, 0, emotion_tag]
-        
-        init = np.array([
-            target_emotion,  # emotion
-            [0, 0, 1, 2, 0, 0, 0, 0] # bar
-        ])
-
-
-        cnt_token = len(init)
-        with torch.no_grad():
-            final_res = []
-            memory = None
-            h = None
-            
-            cnt_bar = 1
-            init_t = torch.from_numpy(init).long().cuda()
-            print('------ initiate ------')
-            for step in range(init.shape[0]):
-                print_word_cp(init[step, :])
-                input_ = init_t[step, :].unsqueeze(0).unsqueeze(0)
-                final_res.append(init[step, :][None, ...])
-
-                h, y_type, memory = self.forward_hidden(
-                        input_, memory, is_training=False)
-
-            print('------ generate ------')
-            while(True):
-                # sample others
-                next_arr, y_emotion = self.froward_output_sampling(h, y_type)
-                final_res.append(next_arr[None, ...])
-                print('bar:', cnt_bar, end= '  ==')
-                print_word_cp(next_arr)
-
-                # forward
-                input_ = torch.from_numpy(next_arr).long().cuda()
-                input_  = input_.unsqueeze(0).unsqueeze(0)
-                h, y_type, memory = self.forward_hidden(
-                    input_, memory, is_training=False)
-
-                # end of sequence
-                if word2event['type'][next_arr[3]] == 'EOS':
-                    break
-                
-                if word2event['bar-beat'][next_arr[2]] == 'Bar':
-                    cnt_bar += 1
-
-        print('\n--------[Done]--------')
-        final_res = np.concatenate(final_res)
-        print(final_res.shape)
-        return final_res
+if args.data_parallel == 0:
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(gid)
 
 
 ##########################################################################################################################
@@ -532,7 +128,91 @@ class TransformerModel(nn.Module):
 ##########################################################################################################################
 
 
+class PEmoDataset(Dataset):
+    ''' Dataset for loading and preprocessing the COVID19 dataset '''
+    def __init__(self,
+                 
+                 task_type):
+
+        self.train_data = np.load(path_train_data)
+        self.train_x = self.train_data['x']
+        self.train_y = self.train_data['y']
+        self.train_mask = self.train_data['mask']
+        
+        if task_type != 'ignore':
+        
+            self.cls_idx = np.load(path_train_data_cls_idx)
+            self.cls_1_idx = self.cls_idx['cls_1_idx']
+            self.cls_2_idx = self.cls_idx['cls_2_idx']
+            self.cls_3_idx = self.cls_idx['cls_3_idx']
+            self.cls_4_idx = self.cls_idx['cls_4_idx']
+        
+            if task_type == 'Arousal':
+                print('preparing data for training "Arousal"')
+                self.label_transfer('Arousal')
+
+            elif task_type == 'Valence':
+                print('preparing data for training "Valence"')
+                self.label_transfer('Valence')
+
+
+        self.train_x = torch.from_numpy(self.train_x).long()
+        self.train_y = torch.from_numpy(self.train_y).long()
+        self.train_mask = torch.from_numpy(self.train_mask).float()
+
+
+        self.seq_len = self.train_x.shape[1]
+        self.dim = self.train_x.shape[2]
+        
+        print('train_x: ', self.train_x.shape)
+
+    def label_transfer(self, TYPE):
+        if TYPE == 'Arousal':
+            for i in range(self.train_x.shape[0]):
+                if self.train_x[i][0][-1] in [1,2]:
+                    self.train_x[i][0][-1] = 1
+                elif self.train_x[i][0][-1] in [3,4]:
+                    self.train_x[i][0][-1] = 2
+        
+        elif TYPE == 'Valence':
+            for i in range(self.train_x.shape[0]):
+                if self.train_x[i][0][-1] in [1,4]:
+                    self.train_x[i][0][-1] = 1
+                elif self.train_x[i][0][-1] in [2,3]:
+                    self.train_x[i][0][-1] = 2   
+
+        
+        
+    def __getitem__(self, index):
+        return self.train_x[index], self.train_y[index], self.train_mask[index]
+    
+
+    def __len__(self):
+        return len(self.train_x)
+
+
+def prep_dataloader(task_type, batch_size, n_jobs=0):
+    
+    dataset = PEmoDataset(task_type) 
+    
+    dataloader = DataLoader(
+        dataset, batch_size,
+        shuffle=False, drop_last=False,
+        num_workers=n_jobs, pin_memory=True)                          
+    return dataloader
+
+
+
+
 def train():
+
+    myseed = 42069
+    np.random.seed(myseed)
+    torch.manual_seed(myseed)
+    if torch.cuda.is_available():    
+        torch.cuda.manual_seed_all(myseed)
+
+
     # hyper params
     n_epoch = 4000
     max_grad_norm = 3
@@ -540,21 +220,34 @@ def train():
     # load
     dictionary = pickle.load(open(path_dictionary, 'rb'))
     event2word, word2event = dictionary
-    train_data = np.load(path_train_data)
+    
+    train_loader = prep_dataloader(args.task_type, batch_size)
 
     # create saver
     saver_agent = saver.Saver(path_exp)
 
     # config
-    n_class = []  # number of classes of each token. [56, 127, 18, 4, 85, 18, 41, 5]
+    n_class = []  # number of classes of each token. [56, 127, 18, 4, 85, 18, 41, 5]  with key: [... , 25]
     for key in event2word.keys():
         n_class.append(len(dictionary[0][key]))
     
+    
+
+    n_token = len(n_class)
     # log
     print('num of classes:', n_class)
     
     # init
-    net = TransformerModel(n_class)
+    
+
+    if args.data_parallel > 0 and torch.cuda.count() > 1:
+        print("Let's use", torch.cuda.device_count(), "GPUs!")
+        net = TransformerModel(n_class, in_attn=args.in_attn, data_parallel=True)
+        net = nn.DataParallel(net)
+
+    else:
+        net = TransformerModel(n_class, in_attn=args.in_attn)
+
     net.cuda()
     net.train()
     n_parameters = network_paras(net)
@@ -570,70 +263,100 @@ def train():
         name = 'loss_' + str(loss)
         path_saved_ckpt = os.path.join(path_ckpt, name + '_params.pt')
         print('[*] load model from:',  path_saved_ckpt)
-        net.load_state_dict(torch.load(path_saved_ckpt))
+        
+        try:
+            net.load_state_dict(torch.load(path_saved_ckpt))
+        except:
+            # print('WARNING!!!!! Not the whole pre-train model is loaded, only load partial')
+            # print('WARNING!!!!! Not the whole pre-train model is loaded, only load partial')
+            # print('WARNING!!!!! Not the whole pre-train model is loaded, only load partial')
+            # net.load_state_dict(torch.load(path_saved_ckpt), strict=False)
+        
+            state_dict = torch.load(path_saved_ckpt)
+            new_state_dict = OrderedDict()
+            for k, v in state_dict.items():
+                name = k[7:] 
+                new_state_dict[name] = v
+            
+            net.load_state_dict(new_state_dict)
+
 
     # optimizers
     optimizer = optim.Adam(net.parameters(), lr=init_lr)
 
-    # unpack
-    train_x = train_data['x']
-    train_y = train_data['y']
-    train_mask = train_data['mask']
-    num_batch = len(train_x) // batch_size
-    
-    print('    num_batch:', num_batch)
-    print('    train_x:', train_x.shape)
-    print('    train_y:', train_y.shape)
-    print('    train_mask:', train_mask.shape)
 
     # run
     start_time = time.time()
     for epoch in range(n_epoch):
         acc_loss = 0
-        acc_losses = np.zeros(8)
+        acc_losses = np.zeros(n_token)
 
-        for bidx in range(num_batch): # num_batch 
+
+        num_batch = len(train_loader)
+        print('    num_batch:', num_batch)
+
+        for bidx, (batch_x, batch_y, batch_mask)  in enumerate(train_loader): # num_batch 
             saver_agent.global_step_increment()
 
-            # index
-            bidx_st = batch_size * bidx
-            bidx_ed = batch_size * (bidx + 1)
-
-            # unpack batch data
-            batch_x = train_x[bidx_st:bidx_ed]
-            batch_y = train_y[bidx_st:bidx_ed]
-            batch_mask = train_mask[bidx_st:bidx_ed]
-
-            # to tensor
-            batch_x = torch.from_numpy(batch_x).long().cuda()
-            batch_y = torch.from_numpy(batch_y).long().cuda()
-            batch_mask = torch.from_numpy(batch_mask).float().cuda()
-
-            # run
-            losses = net.train_step(batch_x, batch_y, batch_mask)
-
+            batch_x = batch_x.cuda()
+            batch_y = batch_y.cuda()
+            batch_mask = batch_mask.cuda()
             
-            loss = (losses[0] + losses[1] + losses[2] + losses[3] + losses[4] + losses[5] + losses[6] + losses[7]) / 8
-         
+            
+            losses = net(batch_x, batch_y, batch_mask)
+
+            if args.data_parallel > 0:
+                loss = 0
+                calculated_loss = []
+                for i in range(n_token):
+                    
+                    loss += ((losses[i][0][0] + losses[i][0][1]) / (losses[i][1][0] + losses[i][1][1]))
+                    calculated_loss.append((losses[i][0][0] + losses[i][0][1]) / (losses[i][1][0] + losses[i][1][1]))
+                loss = loss / n_token
+                
+                
+            else:
+                loss = (losses[0] + losses[1] + losses[2] + losses[3] + losses[4] + losses[5] + losses[6] + losses[7]) / 8
+
 
             # Update
             net.zero_grad()
             loss.backward()
+                
+                
             if max_grad_norm is not None:
                 clip_grad_norm_(net.parameters(), max_grad_norm)
             optimizer.step()
 
-            # print
-            sys.stdout.write('{}/{} | Loss: {:06f} | {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}\r'.format(
-                bidx, num_batch, loss, losses[0], losses[1], losses[2], losses[3], losses[4], losses[5], losses[6], losses[7]))
-            sys.stdout.flush()
+            if args.data_parallel > 0:
+                
+                sys.stdout.write('{}/{} | Loss: {:06f} | {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}\r'.format(
+                        bidx, num_batch, loss, calculated_loss[0], calculated_loss[1], calculated_loss[2], calculated_loss[3], calculated_loss[4], calculated_loss[5], calculated_loss[6], calculated_loss[7]))
+                sys.stdout.flush()
 
-            # acc
-            acc_losses += np.array([l.item() for l in losses])
+
+                # acc
+                acc_losses += np.array([l.item() for l in calculated_loss])
+
+
+
+            else:
+                
+                sys.stdout.write('{}/{} | Loss: {:06f} | {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}\r'.format(
+                        bidx, num_batch, loss, losses[0], losses[1], losses[2], losses[3], losses[4], losses[5], losses[6], losses[7]))
+                sys.stdout.flush()
+
+
+                # acc
+                acc_losses += np.array([l.item() for l in losses])
+
+
+
             acc_loss += loss.item()
 
             # log
             saver_agent.add_summary('batch loss', loss.item())
+
         
         # epoch loss
         runtime = time.time() - start_time
@@ -642,8 +365,10 @@ def train():
         print('------------------------------------')
         print('epoch: {}/{} | Loss: {} | time: {}'.format(
             epoch, n_epoch, epoch_loss, str(datetime.timedelta(seconds=runtime))))
+        
         each_loss_str = '{:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}, {:04f}\r'.format(
-              acc_losses[0], acc_losses[1], acc_losses[2], acc_losses[3], acc_losses[4], acc_losses[5], acc_losses[6], acc_losses[7])
+                  acc_losses[0], acc_losses[1], acc_losses[2], acc_losses[3], acc_losses[4], acc_losses[5], acc_losses[6], acc_losses[7])
+        
         print('    >', each_loss_str)
 
         saver_agent.add_summary('epoch loss', epoch_loss)
@@ -654,10 +379,10 @@ def train():
         if 0.4 < loss <= 0.8:
             fn = int(loss * 10) * 10
             saver_agent.save_model(net, name='loss_' + str(fn))
-        elif 0.05 < loss <= 0.40:
+        elif 0.08 < loss <= 0.40:
             fn = int(loss * 100)
             saver_agent.save_model(net, name='loss_' + str(fn))
-        elif loss <= 0.05:
+        elif loss <= 0.08:
             print('Finished')
             return  
         else:
@@ -665,8 +390,8 @@ def train():
 
 
 def generate():
-    # path
 
+    # path
     path_ckpt = info_load_model[0] # path to ckpt dir
     loss = info_load_model[1] # loss
     name = 'loss_' + str(loss)
@@ -684,6 +409,9 @@ def generate():
     for key in event2word.keys():
         n_class.append(len(dictionary[0][key]))
 
+
+    n_token = len(n_class)
+
     # init model
     net = TransformerModel(n_class, is_training=False)
     net.cuda()
@@ -691,8 +419,20 @@ def generate():
     
     # load model
     print('[*] load model from:',  path_saved_ckpt)
-    net.load_state_dict(torch.load(path_saved_ckpt))
     
+    
+    try:
+        net.load_state_dict(torch.load(path_saved_ckpt))
+    except:
+        state_dict = torch.load(path_saved_ckpt)
+        new_state_dict = OrderedDict()
+        for k, v in state_dict.items():
+            name = k[7:] # remove `module.`，表面从第7个key值字符取到最后一个字符，正好去掉了module.
+            new_state_dict[name] = v
+            
+        net.load_state_dict(new_state_dict)
+
+
     # gen
     start_time = time.time()
     song_time_list = []
@@ -704,10 +444,16 @@ def generate():
         # try:
         start_time = time.time()
         print('current idx:', sidx)
-        path_outfile = os.path.join(path_gendir, 'emo_{}_{}.mid'.format( str(emotion_tag), str(sidx)))
-            
-        res = net.inference_from_scratch(dictionary, emotion_tag)
-        write_midi(res, path_outfile, word2event)
+
+        if n_token == 8:
+            path_outfile = os.path.join(path_gendir, 'emo_{}_{}'.format( str(emotion_tag), get_random_string(10)))        
+            res, _ = net.inference_from_scratch(dictionary, emotion_tag, n_token)
+        
+
+        if res is None:
+            continue
+        np.save(path_outfile + '.npy', res)
+        write_midi(res, path_outfile + '.mid', word2event)
 
         song_time = time.time() - start_time
         word_len = len(res)
@@ -717,12 +463,7 @@ def generate():
         song_time_list.append(song_time)
 
         sidx += 1
-        # except KeyboardInterrupt:
-        #     raise ValueError(' [x] terminated.')
-        # except:
-        #     # continue
-        #     exit()
-  
+
     
     print('ave token time:', sum(words_len_list) / sum(song_time_list))
     print('ave song time:', np.mean(song_time_list))
@@ -738,14 +479,15 @@ def generate():
         json.dump(runtime_result, f)
 
 
+
+
+
 if __name__ == '__main__':
     # -- training -- #
     if MODE == 'train':
         train()
-
     # -- inference -- #
     elif MODE == 'inference':
         generate()
-        
     else:
         pass

@@ -1,8 +1,11 @@
 
 import os
 import glob
+import random
+import string
 import numpy as np
 import torch
+import torch.nn.functional as F
 from tqdm import tqdm
 import ipdb
 import pickle
@@ -86,13 +89,16 @@ def write_midi(words, path_outfile, word2event):
 # -- temperature -- #
 def softmax_with_temperature(logits, temperature):
     probs = np.exp(logits / temperature) / np.sum(np.exp(logits / temperature))
-    return probs
+    if np.isnan(probs).any():
+        return None
+    else:
+        return probs
 
 
+
+## gumbel
 def gumbel_softmax(logits, temperature):
-    ipdb.set_trace()
-    raise NotImplementedError
-
+    return F.gumbel_softmax(logits, tau=temperature, hard=True)
 
 
 def weighted_sampling(probs):
@@ -105,6 +111,7 @@ def weighted_sampling(probs):
 
 # -- nucleus -- #
 def nucleus(probs, p):
+    
     probs /= (sum(probs) + 1e-5)
     sorted_probs = np.sort(probs)[::-1]
     sorted_index = np.argsort(probs)[::-1]
@@ -117,26 +124,63 @@ def nucleus(probs, p):
         candi_index = sorted_index[:]
     candi_probs = [probs[i] for i in candi_index]
     candi_probs /= sum(candi_probs)
-    word = np.random.choice(candi_index, size=1, p=candi_probs)[0]
+    try:
+        word = np.random.choice(candi_index, size=1, p=candi_probs)[0]
+    except:
+        ipdb.set_trace()
     return word
 
 
+
 def sampling(logit, p=None, t=1.0, is_training=False):
-    logit = logit.squeeze().cpu().numpy()
+    
 
     if is_training:
+        logit = logit.squeeze()
         probs = gumbel_softmax(logits=logit, temperature=t)
+        
+        return torch.argmax(probs)
+        
     else:
+        logit = logit.squeeze().cpu().numpy()
         probs = softmax_with_temperature(logits=logit, temperature=t)
     
-    if p is not None:
-        cur_word = nucleus(probs, p=p)
-    else:
-        cur_word = weighted_sampling(probs)
-    return cur_word
+        if probs is None:
+            return None
+
+        if p is not None:
+            cur_word = nucleus(probs, p=p)
+            
+        else:
+            cur_word = weighted_sampling(probs)
+        return cur_word
 
 
 
+
+
+
+def get_random_string(length):
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
+
+
+
+'''
+假如 classifier 是 pre-trained, 
+那就要過 gumbel softmax (因為 classifer 是看 real data)
+假如不是，classsifier 直接吃 training phase 的東西，那直接喂 logit/ softmax 也可以
+
+KEY: classifier 有沒有要看 real data
+有： gumbel
+沒有： 不用 gumbel
+
+喂給 classifier 有 2 種選擇：
+1. logit
+2. probs -> 不行，因為還是得要在喂給 forward_hidden... 所以需要  word
+'''
 
 '''
 def compile_data(test_folder):
