@@ -1,10 +1,10 @@
 # EMOPIA
 
-EMOPIA  (pronounced  ‘yee-mò-pi-uh’)  dataset is a  shared multi-modal (audio and MIDI) database focusing on perceived emotion in pop piano music, to facilitate research8on  various  tasks  related  to  music  emotion. The dataset contains 1,087 music clips from 387 songs and clip-level emotion  labels  annotated by four dedicated  annotators. Since the clips are not restricted to one clip per song, they can also be used for song-level analysis.   
+EMOPIA  (pronounced  ‘yee-mò-pi-uh’)  dataset is a  shared multi-modal (audio and MIDI) database focusing on perceived emotion in pop piano music, to facilitate research on  various  tasks  related  to  music  emotion. The dataset contains 1,087 music clips from 387 songs and clip-level emotion  labels  annotated by four dedicated  annotators. Since the clips are not restricted to one clip per song, they can also be used for song-level analysis.   
 
 The detail of the methodology  for  building  the  dataset please refer to our paper.  
 
-# Cite us
+## Cite us
 
 ```
 @inproceedings{EMOPIA,
@@ -15,12 +15,12 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 }
 ```
 
-# Emotion Classification
+## Emotion Classification
 
 For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/MIDI_Emotion_Classification).
 
 
-# Conditional Generation
+## Conditional Generation
 
 
 
