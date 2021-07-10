@@ -1,7 +1,20 @@
-# emotional-piano
-Emotional conditioned music generation using transformer-based model.
+# EMOPIA
+
+This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation**.
+
+- [Demo Page]()
+- [Dataset at Zenodo]()
+
+
+# Classification
+
+For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/MIDI_Emotion_Classification).
+
+
+# Conditional Generation
 
 ## Environment
+
 1. Install PyTorch and fast transformer:
     - torch==1.7.0 (Please install it according to your [CUDA version](https://pytorch.org/get-started/previous-versions/#linux-and-windows-4).)
     - fast transformer :
