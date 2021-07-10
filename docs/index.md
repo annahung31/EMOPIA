@@ -23,39 +23,16 @@ For the classification models and codes, please refer to [this repo](https://git
 # Conditional Generation
 
 
-<table>
-  <thead>
-    <tr>
-      <th>• Q1 (High Valence, High Arousal)</th>
-      <th><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>• Q1 (High Valence, High Arousal)</td>
-      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
-    </tr>
-    <tr>
-      <td>• Q1 (High Valence, High Arousal)</td>
-      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
-    </tr>
-    <tr>
-      <td>• Q1 (High Valence, High Arousal)</td>
-      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
-    </tr>
-  </tbody>
-</table>
-
 
 <h2>Q1 (High Valence, high Arousal)</h2>
 
-<table>
+<table class="audio-table">
   <tbody>
     <tr>
       <td>Baseline</td>
-      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
-      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
-      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/gen_Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/gen_Q1_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/gen_Q1_3.mp3" type="audio/mpeg" /></audio></td>
     </tr>
     <tr>
       <td>Transformer w/o pre-training</td>
