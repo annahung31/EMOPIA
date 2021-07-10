@@ -24,7 +24,7 @@ For the classification models and codes, please refer to [this repo](https://git
 
 
 
-<h2>Q1 (High Valence, high Arousal)</h2>
+<h3>Q1 (High valence, high arousal)</h3>
 
 <table class="audio-table">
   <tbody>
@@ -47,6 +47,93 @@ For the classification models and codes, please refer to [this repo](https://git
       <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
       <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
       <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+<h3>Q2 (Low valence, high arousal)</h3>
+
+<table class="audio-table">
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q2/gen_Q2_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q2/gen_Q2_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q2/gen_Q2_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q2/Q2_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q2/Q2_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q2/Q2_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+<h3>Q3 (Low valence, low arousal)</h3>
+
+<table class="audio-table">
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q3/gen_Q3_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q3/gen_Q3_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q3/gen_Q3_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q3/Q3_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q3/Q3_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q3/Q3_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q3/Q3_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q3/Q3_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q3/Q3_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+<h3>Q4 (High valence, low arousal)</h3>
+
+<table class="audio-table">
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q4/gen_Q4_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q4/gen_Q4_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q4/gen_Q4_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q4/Q4_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q4/Q4_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q4/Q4_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q4/Q4_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q4/Q4_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q4/Q4_3.mp3" type="audio/mpeg" /></audio></td>
     </tr>
   </tfoot>
 </table>
