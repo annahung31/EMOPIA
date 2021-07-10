@@ -2,7 +2,7 @@
 
 This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation**.
 
-- [Demo Page]()
+- [Demo Page](https://annahung31.github.io/EMOPIA/)
 - [Dataset at Zenodo]()
 
 
