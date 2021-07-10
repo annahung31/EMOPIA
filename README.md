@@ -6,7 +6,7 @@ This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For
 - [Dataset at Zenodo]()
 
 
-# Classification
+# Emotion Classification
 
 For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/MIDI_Emotion_Classification).
 
