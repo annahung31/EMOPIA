@@ -33,15 +33,43 @@ For the classification models and codes, please refer to [this repo](https://git
   <tbody>
     <tr>
       <td>• Q1 (High Valence, High Arousal)</td>
-      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
     </tr>
     <tr>
       <td>• Q1 (High Valence, High Arousal)</td>
-      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
     </tr>
     <tr>
       <td>• Q1 (High Valence, High Arousal)</td>
       <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
     </tr>
   </tbody>
+</table>
+
+
+<h2>Q1 (High Valence, high Arousal)</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
 </table>
