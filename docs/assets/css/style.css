@@ -55,7 +55,7 @@ table.VA-example td, table.VA-example th {
 
 table.num-table{
   /* border: none; */
-  margin: auto;
+  /* margin: auto; */
   width: 100%;
   overflow:visible;
 
