@@ -63,7 +63,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 ### Number of clips
 The following table shows the number of clips and their average length for each quadrant in Russell’s 4Q, in EMOPIA.  
 
-<table class="num-table"  style="center" cellspacing="0" cellpadding="0">
+<table class="num-table" cellspacing="0" cellpadding="0">
   <tr>
     <th>Quadrant</th>
     <th># clips</th>
@@ -116,7 +116,7 @@ The following table shows the number of clips and their average length for each 
 </div>
 
 
-## Cite us
+## Cite this dataset
 
 ```
 @inproceedings{EMOPIA,
@@ -134,7 +134,14 @@ For the classification models and codes, please refer to [this repo](https://git
 
 ## Conditional Generation
 
+We build the Transformer and LSTM models for emotion-conditioned symbolic music generation using EMPOIA. For the former, we adopt the Compound Word Transformer, the state-of-the-art in unconditioned symbolic music generation. We employ the CP+emotion representation presented in Section 3.4 as the data representation.  For the LSTM model, we consider the approach proposed by Ferreira et al.
 
+In CP, tokens belonging to the same family are grouped into a super token and placed on the same timestep (see Figure 1(c)). CP considers by default three families: metrical, note, and end-of-sequence. We additionally consider the “emotion” tokens and make it a new family, as depicted in Figure 1(d). The prepending approach is motivated by CTRL [43], a state-of-the-art controllable text generation model in natural language processing (NLP) that uses global tokens to affect some overall properties of a sequence.
+
+
+As the size of EMOPIA might not be big enough, we use additionally the AILabs17k dataset compiled by Hsiao et al. to pre-train the Transformer. AILabs17k con- tains 1,748 samples and is also pop piano music, but it does not contain emotion labels. We pre-train the Transformer on AILabs17k and then fine-tune it on EMOPIA.  
+
+The following are some generated examples for each Quadrant:  
 
 <h3>Q1 (High valence, high arousal)</h3>
 
