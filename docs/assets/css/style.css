@@ -5,7 +5,7 @@ table.audio-table td {
 
 table.audio-table audio {
     height: 2rem;
-    max-width: 10rem; }
+    max-width: 9rem; }
 
 @media screen and (min-width: 106rem) {
   table.audio-table audio {
@@ -16,14 +16,16 @@ table.audio-table audio {
 @media screen and (min-width: 106rem) {
   table.audio-table {
         table-layout: fixed;
-        overflow-y: visible; }
+        overflow-y: visible;
+        overflow-x: visible; }
   table.audio-table .metric-col {
         width: 7em; } }
 @media screen and (max-width: 106rem) {
   table.audio-table {
         display: block;
         max-height: 90vh;
-        overflow-y: visible; }
+        overflow-y: visible;
+        overflow-x: visible; }
   table.audio-table th {
         white-space: nowrap; } }
 
