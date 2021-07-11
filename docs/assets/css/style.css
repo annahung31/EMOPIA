@@ -10,3 +10,31 @@ table.audio-table td {
         display: block;
         width: 100%;
         max-width: 100%; } }
+
+
+table, th, td {
+  border: none;
+  position: relative;
+  left: 0px;
+  top: 50px;
+}
+
+.resp-iframe {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 255;
+  height: 142;
+  border-radius: 10px;
+}
+        
+.VA-image {
+  background-image: url("https://raw.githubusercontent.com/annahung31/EMOPIA/main/docs/img/VA_Q.png");
+  background-color: #FFFFFF;
+  height: 600px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 900px 550px;
+  position: relative;
+}
+        

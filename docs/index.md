@@ -9,31 +9,37 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 <h3>Q1 (High valence, high arousal)</h3>
 
+<div class="VA-image" >
 
-<div class="VA-image">
-<div id="contentframe" style="position:relative; top: 100px; left: 400px;">
-  <iframe width="280" height="157" 		src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-  </iframe>
-</div>
-    
-<div id="contentframe" style="position:absolute; top: 100px; left: 50px;">
-	<iframe width="280" height="157" 		src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-  </iframe>
-</div>   
-    
-    
-<div id="contentframe" style="position:absolute; top: 280px; left: 50px;">
-	<iframe width="280" height="157" 		src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+<table style="width:100%" cellspacing="50" cellpadding="0">
+
+  <tr>
+    <td>
+    <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
-</div>   
-
-<div id="contentframe" style="position:absolute; top: 280px; left: 400px;">
-	<iframe width="280" height="157" 		src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    
+    </td>
+    <td><iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
-</div>   
- 
-</div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+    
+    </td>
+    <td>
+    <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+    
+    </td>
+    
+  </tr>
 
+</table>
+
+</div>
 
 ## Cite us
 
