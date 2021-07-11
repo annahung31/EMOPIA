@@ -4,6 +4,15 @@ EMOPIA  (pronounced  ‘yee-mò-pi-uh’)  dataset is a  shared multi-modal (aud
 
 The detail of the methodology  for  building  the  dataset please refer to our paper.  
 
+
+## Example of the dataset
+
+<h3>Q1 (High valence, high arousal)</h3>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
 ## Cite us
 
 ```
