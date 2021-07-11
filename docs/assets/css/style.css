@@ -11,7 +11,7 @@ table.audio-table audio {
   table.audio-table audio {
     display: block;
     width: 80%;
-    max-width: 80%; } }
+    max-width: 100%; } }
 
 @media screen and (min-width: 106rem) {
   table.audio-table {
@@ -34,12 +34,11 @@ table.VA-example, th, td {
   position: relative;
   left: 20px;
   top: 0px;
-  text-align: center;
+  text-align: center; 
   font-weight:bold;
   color: #566573;
   overflow:visible;
-  margin-left: auto; 
-  margin-right: auto;
+
 }
 
 
