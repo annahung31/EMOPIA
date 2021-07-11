@@ -22,7 +22,7 @@ table.audio-table audio {
   table.audio-table {
         display: block;
         max-height: 90vh;
-        overflow-y: auto; }
+        overflow-y: visible; }
   table.audio-table th {
         white-space: nowrap; } }
 
@@ -36,6 +36,7 @@ table.VA-example, th, td {
   text-align: center;
   font-weight:bold;
   color: #566573;
+  overflow:visible;
 }
 
 .resp-iframe {
