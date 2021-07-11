@@ -58,6 +58,8 @@ table.num-table{
   /* margin: auto; */
   width: 100%;
   overflow:visible;
+  margin-left:auto; 
+  margin-right:auto;
 
 }
 
