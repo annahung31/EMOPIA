@@ -9,10 +9,10 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 <div class="VA-image">
 <table class="VA-example" style="width:100%" cellspacing="10" cellpadding="0">
-  <tr>
+  <!-- <tr>
   	<td style="text-align: center; vertical-align: middle;">Q2</td>
     <td style="text-align: center; vertical-align: middle;">Q1</td>
-  </tr>
+  </tr> -->
 
   <tr>
   <!-- Q2 -->
@@ -28,10 +28,10 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
   </tr>
 
-  <tr>
+  <!-- <tr>
   	<td style="text-align: center; vertical-align: middle;">Q3</td>
     <td style="text-align: center; vertical-align: middle;">Q4</td>
-  </tr>
+  </tr> -->
 
   <tr>
   <!-- Q3 -->
