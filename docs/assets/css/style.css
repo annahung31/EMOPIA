@@ -37,10 +37,11 @@ figcaption {
 
 table.VA-example{
   /* border: none; */
-  position: relative;
+  /* position: relative;
   left: 20px;
-  top: 10px;
+  top: 10px; */
   overflow:visible;
+  margin: auto;
 
 }
 

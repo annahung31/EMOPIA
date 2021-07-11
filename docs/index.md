@@ -62,7 +62,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 ### Number of clips
 The following table shows the number of clips and their average length for each quadrant in Russell’s 4Q, in EMOPIA.  
-<div align="center">
+
 <table class="num-table"  cellspacing="0" cellpadding="0">
   <tr>
     <th>Quadrant</th>
@@ -93,7 +93,7 @@ The following table shows the number of clips and their average length for each 
     <td>38.2 / 729</td>
   </tr>
 </table>
-</div>
+
 
 ### Pipeline of data collection
 <div align="left">
