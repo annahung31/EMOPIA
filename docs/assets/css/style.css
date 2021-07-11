@@ -10,7 +10,7 @@ table.audio-table audio {
 @media screen and (min-width: 200rem) {
   table.audio-table audio {
     display: block;
-    width: 80%;
+    width: 100%;
     max-width: 100%; } }
 
 @media screen and (min-width: 106rem) {
