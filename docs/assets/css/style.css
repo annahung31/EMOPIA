@@ -29,7 +29,11 @@ table.audio-table audio {
   table.audio-table th {
         white-space: nowrap; } }
 
-
+figcaption {  
+  color: gray;
+  padding: 2px;
+  text-align: center;
+    }
 
 table.VA-example{
   /* border: none; */

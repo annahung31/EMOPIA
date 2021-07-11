@@ -7,6 +7,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 ### Pipeline of data collection
 <div align="left">
   <img src="./img/pipeline.png" width=1000x>
+  <figcaption><strong>Fig.1</strong></figcaption>
 </div>
 
 
@@ -62,6 +63,18 @@ The detail of the methodology  for  building  the  dataset please refer to our p
   </tr>
 
 </table>
+
+### Dataset Analysis
+
+<div align="left">
+  <img src="./img/feature.png" width=1000x>
+  <figcaption><strong>Fig.2</strong> Violin plots of the distribution in (a) note density, (b) length, and (c) velocity for clips from different classes.</figcaption>
+</div>
+
+<div align="center">
+  <img src="./img/key.png" width=500x>
+  <figcaption><strong>Fig.3</strong> Histogram of the keys (left / right: major / minor 249 keys) for clips from different emotion classes.</figcaption>
+</div>
 
 
 ## Cite us
