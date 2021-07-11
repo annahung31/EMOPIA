@@ -41,7 +41,7 @@ table.VA-example{
 }
 
 table.VA-example td, table.VA-example th {
-  border: 1px solid black;
+  border: 1px dashed gray;
   text-align: center; 
   font-weight:bold;
   color: #566573;
