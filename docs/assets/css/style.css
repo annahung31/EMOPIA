@@ -5,7 +5,7 @@ table.audio-table td {
 
 table.audio-table audio {
     height: 2rem;
-    max-width: 8rem; }
+    max-width: 10rem; }
 
 @media screen and (min-width: 106rem) {
   table.audio-table audio {
