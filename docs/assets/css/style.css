@@ -51,6 +51,25 @@ table.VA-example td, table.VA-example th {
   color: #566573;
 }
 
+
+table.num-table{
+  /* border: none; */
+  position: relative;
+  left: 20px;
+  top: 10px;
+  overflow:visible;
+
+}
+
+table.num-table td, table.num-table th {
+  border: 1px dashed gray;
+  text-align: center; 
+  color: #566573;
+}
+
+
+
+
 .resp-iframe {
   position: relative;
   top: 0;
