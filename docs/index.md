@@ -6,7 +6,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 ### Pipeline of data collection
 <div align="left">
-  <img src=./img/pipeline.png width=1000x>
+  <img src="./img/pipeline.png" width=1000x>
 </div>
 
 
