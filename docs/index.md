@@ -8,37 +8,42 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 ## Example of the dataset
 
 
-<table class="VA-example" style="width:100%" cellspacing="10" cellpadding="0">
+<table class="VA-example" style="width:100%" cellspacing="0" cellpadding="0">
   <tr>
-  	<td style="text-align: center; vertical-align: middle;">Q1</td>
-    <td style="text-align: center; vertical-align: middle;">Q2</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
+  	<td style="text-align: center; vertical-align: middle;">Low Valence</td>
+    <td style="text-align: center; vertical-align: middle;">High Valence</td>
   </tr>
 
   <tr>
 
-  <!-- Q1 -->
-  <td style="text-align: center; vertical-align: middle;">
-  <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
-  </td>
-
-
+  <td style="text-align: right; vertical-align: middle;">High Arousal</td>
   <!-- Q2 -->
   <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/61EA0xRX8gE?start=61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     
   </td>
 
+  <!-- Q1 -->
+  <td style="text-align: center; vertical-align: middle;">
+  <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </td>
   </tr>
 
-  <tr>
+
+  <!-- <tr>
+    <td style="text-align: center; vertical-align: middle;"></td>
   	<td style="text-align: center; vertical-align: middle;">Q3</td>
     <td style="text-align: center; vertical-align: middle;">Q4</td>
-  </tr>
+  </tr> -->
 
   <tr>
+
+  <td style="text-align: right; vertical-align: middle;">Low Arousal</td>
+
   <!-- Q3 -->
-    <td style="text-align: center; vertical-align: middle;">
+  <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/Ie5koh4qvJc?t=233" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     
