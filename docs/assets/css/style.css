@@ -2,14 +2,30 @@
 {"mode":"full","isActive":false}
 table.audio-table td {
     vertical-align: top; }
-  table.audio-table audio {
+
+table.audio-table audio {
     height: 2.5rem;
     max-width: 11rem; }
-    @media screen and (min-width: 106rem) {
-      table.audio-table audio {
+
+@media screen and (min-width: 106rem) {
+  table.audio-table audio {
+    display: block;
+    width: 100%;
+    max-width: 100%; } }
+
+@media screen and (min-width: 106rem) {
+  table.audio-table {
+        table-layout: fixed; }
+  table.audio-table .metric-col {
+        width: 7em; } }
+@media screen and (max-width: 106rem) {
+  table.audio-table {
         display: block;
-        width: 100%;
-        max-width: 100%; } }
+        max-height: 90vh;
+        overflow-y: auto; }
+  table.audio-table th {
+        white-space: nowrap; } }
+
 
 
 table.VA-example, th, td {
