@@ -4,14 +4,14 @@ table.audio-table td {
     vertical-align: top; }
 
 table.audio-table audio {
-    height: 2.5rem;
-    max-width: 11rem; }
+    height: 2rem;
+    max-width: 5rem; }
 
 @media screen and (min-width: 106rem) {
   table.audio-table audio {
     display: block;
-    width: 100%;
-    max-width: 100%; } }
+    width: 80%;
+    max-width: 80%; } }
 
 @media screen and (min-width: 106rem) {
   table.audio-table {
