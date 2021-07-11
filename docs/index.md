@@ -4,28 +4,32 @@ EMOPIA  (pronounced  ‘yee-mò-pi-uh’)  dataset is a  shared multi-modal (aud
 
 The detail of the methodology  for  building  the  dataset please refer to our paper.  
 
+### Pipeline of data collection
+<div align="left">
+  <img src=./img/pipeline.png width=1000x>
+</div>
 
-## Example of the dataset
 
+### Example of the dataset
 
 <table class="VA-example" style="width:100%" cellspacing="0" cellpadding="0">
   <tr>
-    <td style="text-align: center; vertical-align: middle; border: 1px dashed gray;"></td>
-  	<td style="text-align: center; vertical-align: middle; border: 1px dashed gray;">Low Valence</td>
-    <td style="text-align: center; vertical-align: middle; border: 1px dashed gray;">High Valence</td>
+    <td style="text-align: center; vertical-align: middle;"></td>
+  	<td style="text-align: center; vertical-align: middle;">Low Valence</td>
+    <td style="text-align: center; vertical-align: middle;">High Valence</td>
   </tr>
 
-  <tr style="border: 1px dashed gray;">
+  <tr>
 
   <td style="text-align: center; vertical-align: middle;">High Arousal</td>
   <!-- Q2 -->
-  <td style="text-align: center; vertical-align: middle; border: 1px dashed gray;">
+  <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/61EA0xRX8gE?start=61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     
   </td>
 
   <!-- Q1 -->
-  <td style="text-align: center; vertical-align: middle; border: 1px dashed gray;">
+  <td style="text-align: center; vertical-align: middle;">
   <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
   </td>
@@ -38,18 +42,18 @@ The detail of the methodology  for  building  the  dataset please refer to our p
     <td style="text-align: center; vertical-align: middle;">Q4</td>
   </tr> -->
 
-  <tr style="border: 1px dashed gray;">
+  <tr>
 
   <td style="text-align: center; vertical-align: middle;">Low Arousal</td>
 
   <!-- Q3 -->
-  <td style="text-align: center; vertical-align: middle; border: 1px dashed gray;">
+  <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/Ie5koh4qvJc?t=233" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     
   </td>
   <!-- Q4 -->
-    <td style="text-align: center; vertical-align: middle; border: 1px dashed gray;">
+    <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/1fdxsFbnsX4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     
