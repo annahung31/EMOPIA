@@ -17,6 +17,9 @@ table, th, td {
   position: relative;
   left: 0px;
   top: 50px;
+  text-align: center;
+  font-weight:bold;
+  color: #566573;
 }
 
 .resp-iframe {
