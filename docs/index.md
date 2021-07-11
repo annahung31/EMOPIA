@@ -10,34 +10,34 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 <table class="VA-example" style="width:100%" cellspacing="10" cellpadding="0">
   <tr>
-  	<td>Q2</td>
-    <td>Q1</td>
+  	<td style="text-align: center; vertical-align: middle;">Q2</td>
+    <td style="text-align: center; vertical-align: middle;">Q1</td>
   </tr>
 
   <tr>
-  <td>
+  <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     
   </td>
-    <td><iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    <td style="text-align: center; vertical-align: middle;"><iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
   </td>
 
   </tr>
 
   <tr>
-  	<td>Q3</td>
-    <td>Q4</td>
+  	<td style="text-align: center; vertical-align: middle;">Q3</td>
+    <td style="text-align: center; vertical-align: middle;">Q4</td>
   </tr>
 
   <tr>
-    <td>
+    <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     
   </td>
-    <td>
+    <td style="text-align: center; vertical-align: middle;">
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     
@@ -117,7 +117,9 @@ For the classification models and codes, please refer to [this repo](https://git
   <tfoot>
     <tr>
       <td>Transformer w/ pre-training</td>
-      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls="">
+          <source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_1.mp3" type="audio/mpeg" />
+          </audio></td>
       <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_2.mp3" type="audio/mpeg" /></audio></td>
       <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_3.mp3" type="audio/mpeg" /></audio></td>
     </tr>
