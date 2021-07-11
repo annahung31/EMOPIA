@@ -32,10 +32,11 @@ table.audio-table audio {
 
 
 table.VA-example, th, td {
-  border: none;
+  /* border: none; */
+  border: 1px dashed gray;
   position: relative;
   left: 20px;
-  top: 0px;
+  top: 10px;
   text-align: center; 
   font-weight:bold;
   color: #566573;
@@ -59,7 +60,7 @@ table.VA-example, th, td {
   height: 600px;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 900px 550px;
+  background-size: 950px 550px;
   position: relative;
 }
         
