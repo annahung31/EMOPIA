@@ -31,19 +31,21 @@ table.audio-table audio {
 
 
 
-table.VA-example, th, td {
+table.VA-example{
   /* border: none; */
-  border: 1px dashed gray;
   position: relative;
   left: 20px;
   top: 10px;
-  text-align: center; 
-  font-weight:bold;
-  color: #566573;
   overflow:visible;
 
 }
 
+table.VA-example td, table.VA-example th {
+  border: 1px solid black;
+  text-align: center; 
+  font-weight:bold;
+  color: #566573;
+}
 
 .resp-iframe {
   position: relative;
