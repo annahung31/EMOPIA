@@ -12,7 +12,7 @@ table.audio-table td {
         max-width: 100%; } }
 
 
-table, th, td {
+table.VA-example, th, td {
   border: none;
   position: relative;
   left: 0px;

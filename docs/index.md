@@ -10,7 +10,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 <h3>Q1 (High valence, high arousal)</h3>
 
 
-<table style="width:100%" cellspacing="10" cellpadding="0">
+<table class="VA-example" style="width:100%" cellspacing="10" cellpadding="0">
   <tr>
   	<td>Q2</td>
     <td>Q1</td>
@@ -23,13 +23,11 @@ The detail of the methodology  for  building  the  dataset please refer to our p
     </iframe>
     
   </td>
-  
-  <td><iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    <td><iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
   </td>
-  
+
   </tr>
-  
   <tr>
   
   	<td>Q3</td>
@@ -37,7 +35,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
   </tr>
 
   <tr>
-  <td>
+    <td>
     <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     
