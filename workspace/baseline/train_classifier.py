@@ -15,10 +15,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelBinarizer
 
 # Directory where trained model will be saved
-TRAIN_DIR = "./trained_512_2nd"
-DATA_TRAIN = '/home/joann8512/NAS_189/home/piano-emotion-src/Baseline/PEmo/data/train_split.csv'
-DATA_TEST = '/home/joann8512/NAS_189/home/piano-emotion-src/Baseline/PEmo/data/test_split.csv'
-DATASET_PATH = '/home/joann8512/NAS_189/home/piano-emotion-src/Baseline/PEmo/'
+TRAIN_DIR = "./trained"
+DATA_TRAIN = '../data/train_split.csv'
+DATA_TEST = '../data/test_split.csv'
+DATASET_PATH = '../'
 
 def preprocess_sentence(text, front_pad='\n ', end_pad=''):
     text = text.replace('\n', ' ').strip()
@@ -138,8 +138,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='train_classifier.py')
     parser.add_argument('--train', type=str, default=DATA_TRAIN, help="Train dataset.")
     parser.add_argument('--test' , type=str, default=DATA_TEST, help="Test dataset.")
-    parser.add_argument('--model', type=str, default='./trained_512_2nd/', help="Checkpoint dir.")
-    parser.add_argument('--ch2ix', type=str, default='./trained_512/char2idx.json', help="JSON file with char2idx encoding.")
+    parser.add_argument('--model', type=str, default='./trained/', help="Checkpoint dir.")
+    parser.add_argument('--ch2ix', type=str, default='./trained/char2idx.json', help="JSON file with char2idx encoding.")
     parser.add_argument('--embed', type=int, default=256, help="Embedding size.")
     parser.add_argument('--units', type=int, default=512, help="LSTM units.")
     parser.add_argument('--layers', type=int, default=4, help="LSTM layers.")
