@@ -266,9 +266,6 @@ The pre-trained model weights are also in the repository.
 
 
 
-
-
-
 ## Cite this dataset
 
 ```
