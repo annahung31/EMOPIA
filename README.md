@@ -33,9 +33,9 @@ For the classification models and codes, please refer to [this repo](https://git
 
 ### Inference
 1. Download the checkpoints and put them into `exp/`:
-    - [Baseline]()
-    - [no-pretrained transformer]()
-    - [pretrained transformer]()
+    - [Baseline](https://drive.google.com/file/d/1Q9vQYnNJ0hXBFwcxdWQgDNmzoW3MLl3h/view?usp=sharing)
+    - [no-pretrained transformer](https://drive.google.com/file/d/1ZULJgBRu2Wb3jxFmGfAHP1v_tjoryFM7/view?usp=sharing)
+    - [pretrained transformer](https://drive.google.com/file/d/19Seq18b2JNzOamEQMG1uarKjj27HJkHu/view?usp=sharing)
 
 2. Inference options:
 

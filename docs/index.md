@@ -1,90 +1,276 @@
 # EMOPIA
 
-This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation**.
+EMOPIA  (pronounced  ‘yee-mò-pi-uh’)  dataset is a  shared multi-modal (audio and MIDI) database focusing on perceived emotion in **pop piano music**, to facilitate research on  various  tasks  related  to  music  emotion. The dataset contains **1,087** music clips from 387 songs and **clip-level** emotion  labels  annotated by four dedicated  annotators. Since the clips are not restricted to one clip per song, they can also be used for song-level analysis.   
 
-- [Demo Page]()
-- [Dataset at Zenodo]()
+The detail of the methodology  for  building  the  dataset please refer to our paper.      
+
+* [Arxiv (coming soon)](https://annahung31.github.io/EMOPIA/)
+* [Dataset on Zenodo (coming soon)](https://annahung31.github.io/EMOPIA/)
+* [Code for classification](https://github.com/Dohppak/MIDI_Emotion_Classification)
+* [Code for generation](https://github.com/annahung31/EMOPIA)
 
 
-# Emotion Classification
+### Example of the dataset
+
+<table class="VA-example" style="width:100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="text-align: center; vertical-align: middle;"></td>
+  	<td style="text-align: center; vertical-align: middle;">Low Valence</td>
+    <td style="text-align: center; vertical-align: middle;">High Valence</td>
+  </tr>
+
+  <tr>
+
+  <td style="text-align: center; vertical-align: middle;">High Arousal</td>
+  <!-- Q2 -->
+  <td style="text-align: center; vertical-align: middle;">
+    <iframe class="resp-iframe"  src="https://www.youtube.com/embed/61EA0xRX8gE?start=61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <figcaption><strong>Q2</strong></figcaption>
+  </td>
+
+  <!-- Q1 -->
+  <td style="text-align: center; vertical-align: middle;">
+  <iframe class="resp-iframe"  src="https://www.youtube.com/embed/6Uf9XBUD3wE?start=97" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  <figcaption><strong>Q1</strong></figcaption>
+  </td>
+  </tr>
+
+
+  <!-- <tr>
+    <td style="text-align: center; vertical-align: middle;"></td>
+  	<td style="text-align: center; vertical-align: middle;">Q3</td>
+    <td style="text-align: center; vertical-align: middle;">Q4</td>
+  </tr> -->
+
+  <tr>
+
+  <td style="text-align: center; vertical-align: middle;">Low Arousal</td>
+
+  <!-- Q3 -->
+  <td style="text-align: center; vertical-align: middle;">
+    <iframe class="resp-iframe"  src="https://www.youtube.com/embed/Ie5koh4qvJc?t=233" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+    <figcaption><strong>Q3</strong></figcaption>
+  </td>
+  <!-- Q4 -->
+    <td style="text-align: center; vertical-align: middle;">
+    <iframe class="resp-iframe"  src="https://www.youtube.com/embed/1fdxsFbnsX4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+    <figcaption><strong>Q4</strong></figcaption>
+  </td>
+    
+  </tr>
+
+</table>
+
+
+### Number of clips
+The following table shows the number of clips and their average length for each quadrant in Russell’s 4Q, in EMOPIA.  
+<div align="center">
+<table class="num-table" cellspacing="0" cellpadding="0">
+  <tr>
+    <th>Quadrant</th>
+    <th># clips</th>
+    <th>Avg. length (in sec / #tokens)</th>
+  </tr>
+  <tr>
+    <td>Q1</td>
+    <td>250</td>
+    <td>31.9 / 1,065</td>
+  </tr>
+  
+  <tr>
+    <td>Q2</td>
+    <td>265</td>
+    <td>35.6 / 1,368</td>
+  </tr>
+  
+  <tr>
+    <td>Q3</td>
+    <td>253</td>
+    <td>40.6 / 771</td>
+  </tr>
+
+  <tr>
+    <td>Q4</td>
+    <td>310</td>
+    <td>38.2 / 729</td>
+  </tr>
+</table>
+</div>
+
+### Pipeline of data collection
+<div align="left">
+  <img src="./img/pipeline.png" width=1000x>
+  <figcaption><strong>Fig.1</strong></figcaption>
+</div>
+
+
+
+### Dataset Analysis
+
+<div align="left">
+  <img src="./img/feature.png" width=1000x>
+  <figcaption><strong>Fig.2</strong> Violin plots of the distribution in (a) note density, (b) length, and (c) velocity for clips from different classes.</figcaption>
+</div>
+
+<div align="center">
+  <img src="./img/key.png" width=500x>
+  <figcaption><strong>Fig.3</strong> Histogram of the keys (left / right: major / minor 249 keys) for clips from different emotion classes.</figcaption>
+</div>
+
+
+## Cite this dataset
+
+```
+@inproceedings{EMOPIA,
+         author = {Hsiao-Tzu Hung, Joann Ching, Seungheon Doh, Nabin Kim, Juhan Nam, Yi-Hsuan Yang},
+         title = {EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation},
+         booktitle = {Proc. Int. Society for Music Information Retrieval Conf.},
+         year = {2021}
+}
+```
+
+## Emotion Classification
 
 For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/MIDI_Emotion_Classification).
 
 
-# Conditional Generation
+## Conditional Generation
 
-## Environment
+* We adopt the [Compound Word Transformer](https://github.com/YatingMusic/compound-word-transformer) for emotion-conditioned symbolic music generation using EMPOIA. The CP+emotion representation is used as the data representation.
 
-1. Install PyTorch and fast transformer:
-    - torch==1.7.0 (Please install it according to your [CUDA version](https://pytorch.org/get-started/previous-versions/#linux-and-windows-4).)
-    - fast transformer :
+* In the data representation, we additionally consider the “emotion” tokens and make it a new family. The prepending approach is motivated by [CTRL](https://arxiv.org/abs/1909.05858).
 
-        ```
-        pip install --user pytorch-fast-transformers 
-        ```
-        or refer to the original [repository](https://github.com/idiap/fast-transformers)
-
-2. Other requirements:
-
-    pip install -r requirements.txt
+<div align="center">
+  <img src="./img/cp.png" width=500x>
+  <figcaption><strong>Fig.4</strong> Compound word with emotion token
+  </figcaption>
+</div> <br>
 
 
-## Usage
 
-### Inference
-1. Download the checkpoints and put them into `exp/`:
-    - [Baseline]()
-    - [no-pretrained transformer]()
-    - [pretrained transformer]()
-
-2. Inference options:
-
-* `num_songs`: number of midis you want to generate.
-* `out_dir`: the folder where the generated midi will be saved. If not specified, midi files will be saved to `exp/MODEL_YOU_USED/gen_midis/`.
-* `task_type`: the task_type needs to be the same as the task specified during training.  
-    - '4-cls' for 4 class conditioning
-    - 'Arousal' for only conditioning on arousal
-    - 'Valence' for only conditioning on Valence
-    - 'ignore' for not conditioning
-
-*  `emo_tag`: the target class of emotion you want to assign.
-    - If the task_type is '4-cls', emo_tag can be: 1,2,3,4, which refers to Q1, Q2, Q3, Q4.
-    - If the task_type is 'Arousal', emo_tag can be: `1`, `2`. `1` for High arousal, `2` for Low arousal.
-    - If the task_type is 'Valence', emo_tag can be: `1`, `2`. `1` for High Valence, `2` for Low Valence.
-    
-
-3. Inference
-
-    ```
-    python main_cp.py --mode inference --task_type 4-cls --load_ckt CHECKPOINT_FOLDER --load_ckt_loss 25 --num_songs 10 --emo_tag 1 
-    ```
-
-### Training by yourself
-1. Download the data files from [HERE](https://drive.google.com/file/d/10nksP4KnYRd9iRZe7XxTyotiLNNO_U4r/view?usp=sharing).
-    
+* As the size of EMOPIA might not be big enough, we use additionally the [AILabs17k dataset](https://github.com/YatingMusic/compound-word-transformer) compiled by Hsiao et al. to pre-train the Transformer. 
 
 
-2. training options:  
+The following are some generated examples for each Quadrant:  
 
-* `exp_name`: the folder name that the checkpoints will be saved.
-* `data_parallel`: use data_parallel to let the training process faster. (0: not use, 1: use)
-* `task_type`: the conditioning task:
-    - '4-cls' for 4 class conditioning
-    - 'Arousal' for only conditioning on arousal
-    - 'Valence' for only conditioning on Valence
-    - 'ignore' for not conditioning
+<h3>Q1 (High valence, high arousal)</h3>
 
-    a. Only train on EMOPIA: (`no-pretrained transformer` in the paper)
+<table class="audio-table">
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/gen_Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/gen_Q1_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q1/gen_Q1_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q1/Q1_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
+</table>
 
-        python main_cp.py --path_train_data emopia --exp_name YOUR_EXP_NAME --load_ckt none
-    
-    b. Pre-train the transformer on `AILabs17k`:  
-    
-        python main_cp.py --path_train_data ailabs --exp_name YOUR_EXP_NAME --load_ckt none --task_type ignore
-    
-    c. fine-tune the transformer on `EMOPIA`:
-        For example, you want to use the pre-trained model stored in `0309-1857` with loss= `30` to fine-tune:
 
-        python main_cp.py --path_train_data emopia --exp_name YOUR_EXP_NAME --load_ckt 0309-1857 --load_ckt_loss 30
+
+<h3>Q2 (Low valence, high arousal)</h3>
+
+<table class="audio-table">
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q2/gen_Q2_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q2/gen_Q2_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q2/gen_Q2_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q2/Q2_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q2/Q2_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q2/Q2_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls="">
+          <source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_1.mp3" type="audio/mpeg" />
+          </audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q2/Q2_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+<h3>Q3 (Low valence, low arousal)</h3>
+
+<table class="audio-table">
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q3/gen_Q3_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q3/gen_Q3_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q3/gen_Q3_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q3/Q3_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q3/Q3_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q3/Q3_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q3/Q3_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q3/Q3_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q3/Q3_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+<h3>Q4 (High valence, low arousal)</h3>
+
+<table class="audio-table">
+  <tbody>
+    <tr>
+      <td>Baseline</td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q4/gen_Q4_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q4/gen_Q4_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/1_lstm+GA/Q4/gen_Q4_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+    <tr>
+      <td>Transformer w/o pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q4/Q4_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q4/Q4_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/2_Transformer/Q4/Q4_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Transformer w/ pre-training</td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q4/Q4_1.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q4/Q4_2.mp3" type="audio/mpeg" /></audio></td>
+      <td><audio controls=""><source src="./assets/audio_samples/3_Pre-trained_Transformer/Q4/Q4_3.mp3" type="audio/mpeg" /></audio></td>
+    </tr>
+  </tfoot>
+</table>
+
 
 
