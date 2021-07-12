@@ -66,7 +66,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 
 ### Number of clips
-The following table shows the number of clips and their average length for each quadrant in Russell’s 4Q, in EMOPIA.  
+The following table shows the number of clips and their average length for each quadrant in Russell’s valence-arousal emotion space, in EMOPIA.  
 <div align="center">
 <table class="num-table" cellspacing="0" cellpadding="0">
   <tr>
@@ -121,21 +121,12 @@ The following table shows the number of clips and their average length for each 
 </div>
 
 
-## Cite this dataset
-
-```
-@inproceedings{EMOPIA,
-         author = {Hsiao-Tzu Hung, Joann Ching, Seungheon Doh, Nabin Kim, Juhan Nam, Yi-Hsuan Yang},
-         title = {EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation},
-         booktitle = {Proc. Int. Society for Music Information Retrieval Conf.},
-         year = {2021}
-}
-```
 
 ## Emotion Classification
 
-For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/MIDI_Emotion_Classification).
+For the classification codes, please refer to [SeungHeon's repository](https://github.com/Dohppak/MIDI_Emotion_Classification).
 
+The pre-trained model weights are also in the repository.
 
 ## Conditional Generation
 
@@ -150,11 +141,12 @@ For the classification models and codes, please refer to [this repo](https://git
 </div> <br>
 
 
+* As the size of EMOPIA might not be big enough, we use additionally the [AILabs1k7 dataset](https://github.com/YatingMusic/compound-word-transformer) compiled by Hsiao et al. to pre-train the Transformer. 
 
-* As the size of EMOPIA might not be big enough, we use additionally the [AILabs17k dataset](https://github.com/YatingMusic/compound-word-transformer) compiled by Hsiao et al. to pre-train the Transformer. 
+* You can download the model weight of the pre-trained Transformer from [here](https://drive.google.com/file/d/19Seq18b2JNzOamEQMG1uarKjj27HJkHu/view?usp=sharing).
 
 
-The following are some generated examples for each Quadrant:  
+* The following are some generated examples for each Quadrant:  
 
 <h3>Q1 (High valence, high arousal)</h3>
 
@@ -274,3 +266,16 @@ The following are some generated examples for each Quadrant:
 
 
 
+
+
+
+## Cite this dataset
+
+```
+@inproceedings{{EMOPIA},
+         author = {Hung, Hsiao-Tzu and Ching, Joann and Doh, Seungheon and Kim, Nabin and Nam, Juhan and Yang, Yi-Hsuan},
+         title = {EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation},
+         booktitle = {Proc. Int. Society for Music Information Retrieval Conf.},
+         year = {2021}
+}
+```

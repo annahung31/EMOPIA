@@ -1,9 +1,15 @@
 # EMOPIA
 
-This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation**.
+This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation**. The paper has been accepted by International Society for Music Information Retrieval Conference 2021.
 
 - [Demo Page](https://annahung31.github.io/EMOPIA/)
-- [Dataset at Zenodo]()
+- [Dataset at Zenodo (Coming soon)]()
+
+
+
+## License
+The EMOPIA dataset is released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). It is provided primarily for research purposes and is prohibited to be used for commercial purposes. When sharing your result based on EMOPIA, any act that defames the original music owner is strictly prohibited.
+
 
 
 # Emotion Classification
@@ -59,10 +65,9 @@ For the classification models and codes, please refer to [this repo](https://git
     python main_cp.py --mode inference --task_type 4-cls --load_ckt CHECKPOINT_FOLDER --load_ckt_loss 25 --num_songs 10 --emo_tag 1 
     ```
 
-### Training by yourself
-1. Download the data files from [HERE](https://drive.google.com/file/d/10nksP4KnYRd9iRZe7XxTyotiLNNO_U4r/view?usp=sharing).
+### Train the model by yourself
+1. Download the data files from [HERE]().
     
-
 
 2. training options:  
 
@@ -88,3 +93,20 @@ For the classification models and codes, please refer to [this repo](https://git
         python main_cp.py --path_train_data emopia --exp_name YOUR_EXP_NAME --load_ckt 0309-1857 --load_ckt_loss 30
 
 
+
+## Authors
+
+The paper is a co-work project with [Joann](https://github.com/joann8512), [SeungHeon](https://github.com/Dohppak) and Nabin. This repository is mentained by [Joann](https://github.com/joann8512) and me.
+
+
+
+## Cite the dataset
+
+```
+@inproceedings{EMOPIA,
+         author = {Hung, Hsiao-Tzu and Ching, Joann and Doh, Seungheon and Kim, Nabin and Nam, Juhan and Yang, Yi-Hsuan},
+         title = {{MOPIA}: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation},
+         booktitle = {Proc. Int. Society for Music Information Retrieval Conf.},
+         year = {2021}
+}
+```
