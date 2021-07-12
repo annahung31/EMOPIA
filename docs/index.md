@@ -268,6 +268,7 @@ The pre-trained model weights are also in the repository.
 
 ## Cite this dataset
 
+{% raw %}
 ```
 @inproceedings{
          {EMOPIA},
@@ -277,3 +278,4 @@ The pre-trained model weights are also in the repository.
          year = {2021}
           }
 ```
+{% endraw %}
