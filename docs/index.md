@@ -274,7 +274,7 @@ The pre-trained model weights are also in the repository.
 ```
 @inproceedings{{EMOPIA},
          author = {Hung, Hsiao-Tzu and Ching, Joann and Doh, Seungheon and Kim, Nabin and Nam, Juhan and Yang, Yi-Hsuan},
-         title = {EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation},
+         title = {{EMOPIA}: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation},
          booktitle = {Proc. Int. Society for Music Information Retrieval Conf.},
          year = {2021}
 }

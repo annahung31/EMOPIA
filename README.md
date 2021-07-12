@@ -7,11 +7,6 @@ This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For
 
 
 
-## License
-The EMOPIA dataset is released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). It is provided primarily for research purposes and is prohibited to be used for commercial purposes. When sharing your result based on EMOPIA, any act that defames the original music owner is strictly prohibited.
-
-
-
 # Emotion Classification
 
 For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/MIDI_Emotion_Classification).
@@ -96,14 +91,17 @@ For the classification models and codes, please refer to [this repo](https://git
 
 ## Authors
 
-The paper is a co-work project with [Joann](https://github.com/joann8512), [SeungHeon](https://github.com/Dohppak) and Nabin. This repository is mentained by [Joann](https://github.com/joann8512) and me.
+The paper is a co-working project with [Joann](https://github.com/joann8512), [SeungHeon](https://github.com/Dohppak) and Nabin. This repository is mentained by [Joann](https://github.com/joann8512) and me.
 
+
+## License
+The EMOPIA dataset is released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). It is provided primarily for research purposes and is prohibited to be used for commercial purposes. When sharing your result based on EMOPIA, any act that defames the original music owner is strictly prohibited.
 
 
 ## Cite the dataset
 
 ```
-@inproceedings{EMOPIA,
+@inproceedings{{EMOPIA},
          author = {Hung, Hsiao-Tzu and Ching, Joann and Doh, Seungheon and Kim, Nabin and Nam, Juhan and Yang, Yi-Hsuan},
          title = {{MOPIA}: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation},
          booktitle = {Proc. Int. Society for Music Information Retrieval Conf.},
