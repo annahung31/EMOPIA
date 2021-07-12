@@ -11,7 +11,7 @@ import numpy as np
 import midi_encoder as me
 
 # Directory where the checkpoints will be saved
-TRAIN_DIR = "./trained_512_2nd/"
+TRAIN_DIR = "./trained/"
 
 #print('Version: ', tf.__version__)
 #print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -83,8 +83,8 @@ if __name__ == "__main__":
 
     # Parse arguments
     parser = argparse.ArgumentParser(description='train_generative.py')
-    parser.add_argument('--train', type=str, default='/home/joann8512/NAS_189/home/piano-emotion-src/Baseline/PEmo/data/train/', help="Train dataset.")
-    parser.add_argument('--test' , type=str, default='/home/joann8512/NAS_189/home/piano-emotion-src/Baseline/PEmo/data/test/', help="Test dataset.")
+    parser.add_argument('--train', type=str, default='../data/train/', help="Train dataset.")
+    parser.add_argument('--test' , type=str, default='../data/test/', help="Test dataset.")
     parser.add_argument('--model', type=str, required=False, help="Checkpoint dir.")
     parser.add_argument('--embed', type=int, default=256, help="Embedding size.")
     parser.add_argument('--units', type=int, default=512, help="LSTM units.")

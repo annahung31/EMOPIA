@@ -48,7 +48,6 @@ def load(datapath, sample_freq=4, piano_range=(33, 93), transpose_range=10, stre
     return text, vocab
 
 def parse_midi(file_path, sample_freq, piano_range, transpose_range, stretching_range):
-    #print("Parsing midi file:", file_path)
 
     # Split datapath into dir and filename
     midi_dir = os.path.dirname(file_path)

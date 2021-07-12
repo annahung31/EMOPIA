@@ -10,7 +10,7 @@ import midi_encoder as me
 from train_generative import build_generative_model
 from train_classifier import preprocess_sentence
 
-GENERATED_DIR = './generated_512/Pos_Neg'
+GENERATED_DIR = './generated'
 
 def override_neurons(model, layer_idx, override):
     h_state, c_state = model.get_layer(index=layer_idx).states
@@ -88,15 +88,15 @@ if __name__ == "__main__":
 
     # Parse arguments
     parser = argparse.ArgumentParser(description='midi_generator.py')
-    parser.add_argument('--model', type=str, default='./trained_512_2nd', help="Checkpoint dir.")
-    parser.add_argument('--ch2ix', type=str, default='./trained_512_2nd/char2idx.json', help="JSON file with char2idx encoding.")
+    parser.add_argument('--model', type=str, default='./trained', help="Checkpoint dir.")
+    parser.add_argument('--ch2ix', type=str, default='./trained/char2idx.json', help="JSON file with char2idx encoding.")
     parser.add_argument('--embed', type=int, default=256, help="Embedding size.")
     parser.add_argument('--units', type=int, default=512, help="LSTM units.")
     parser.add_argument('--layers', type=int, default=4, help="LSTM layers.")
     parser.add_argument('--seqinit', type=str, default="\n", help="Sequence init.")
     parser.add_argument('--seqlen', type=int, default=512, help="Sequence lenght.")
     parser.add_argument('--cellix', type=int, default=4, help="LSTM layer to use as encoder.")
-    parser.add_argument('--override', type=str, default="./trained_512_2nd/neurons_positive.json", help="JSON file with neuron values to override.")
+    parser.add_argument('--override', type=str, default="./trained/neurons_Q1.json", help="JSON file with neuron values to override.")
     opt = parser.parse_args()
 
     # Load char2idx dict from json file
@@ -132,4 +132,4 @@ if __name__ == "__main__":
         midi_txt = generate_midi(model, char2idx, idx2char, opt.seqinit, opt.seqlen, layer_idx=opt.cellix, override=override)
         
 
-        me.write(midi_txt, os.path.join(GENERATED_DIR, "generated_positive_{}.mid".format(i)))
+        me.write(midi_txt, os.path.join(GENERATED_DIR, "generated_Q1_{}.mid".format(i)))

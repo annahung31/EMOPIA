@@ -16,7 +16,7 @@ GEN_MIN = -1
 GEN_MAX =  1
 
 # Directory where trained model will be saved
-TRAIN_DIR = "./trained_512_2nd"
+TRAIN_DIR = "./trained"
 
 def mutation(individual, mutation_rate):
     for i in range(len(individual)):
@@ -109,7 +109,6 @@ def evolve(pop_size, ind_size, mut_rate, elite_rate, epochs):
     population = np.random.uniform(GEN_MIN, GEN_MAX, (pop_size, ind_size))
 
     # Evaluate initial population
-    #fitness_pop = evaluate(population, gen_model, cls_model, char2idx, idx2char, opt.cellix, opt.sent)
     fitness_pop = evaluate(population, gen_model, cls_model, char2idx, idx2char, opt.cellix, sent)
     print("--> Fitness: \n", fitness_pop)
 
@@ -123,7 +122,6 @@ def evolve(pop_size, ind_size, mut_rate, elite_rate, epochs):
         population = reproduce(mating_pool, pop_size, ind_size, mut_rate)
 
         # Calculate fitness of each individual of the population
-        #fitness_pop = evaluate(population, gen_model, cls_model, char2idx, idx2char, opt.cellix, opt.sent)
         fitness_pop = evaluate(population, gen_model, cls_model, char2idx, idx2char, opt.cellix, sent)
         print("--> Fitness: \n", fitness_pop)
 
@@ -133,9 +131,9 @@ if __name__ == "__main__":
 
     # Parse arguments
     parser = argparse.ArgumentParser(description='evolve_generative.py')
-    parser.add_argument('--genmodel', type=str, default='./trained_512_2nd', help="Generative model to evolve.")
-    parser.add_argument('--clsmodel', type=str, default='./trained_512_2nd/classifier_ckpt.p', help="Classifier model to calculate fitness.")
-    parser.add_argument('--ch2ix', type=str, default='./trained_512_2nd/char2idx.json', help="JSON file with char2idx encoding.")
+    parser.add_argument('--genmodel', type=str, default='./trained', help="Generative model to evolve.")
+    parser.add_argument('--clsmodel', type=str, default='./trained/classifier_ckpt.p', help="Classifier model to calculate fitness.")
+    parser.add_argument('--ch2ix', type=str, default='./trained/char2idx.json', help="JSON file with char2idx encoding.")
     parser.add_argument('--embed', type=int, default=256, help="Embedding size.")
     parser.add_argument('--units', type=int, default=512, help="LSTM units.")
     parser.add_argument('--layers', type=int, default=4, help="LSTM layers.")
@@ -186,15 +184,8 @@ if __name__ == "__main__":
         for i, ix in enumerate(sentneuron_ixs):
             neurons[str(ix)] = best_individual[i]
 
-        #print(neurons)
 
         # Persist dictionary with cell values
-        #sent = "positive"
-        #if opt.sent <= 0:
-        #if sent <= 0:
-        #    sent = "negative"
-        #else:
-        #    sent = "positive"
         if sent == 1:
             sent = 'Q1'
         elif sent == 2:
