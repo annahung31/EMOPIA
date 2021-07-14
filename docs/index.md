@@ -6,7 +6,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 * [Arxiv (coming soon)](https://annahung31.github.io/EMOPIA/)
 * [Dataset on Zenodo (coming soon)](https://annahung31.github.io/EMOPIA/)
-* [Code for classification](https://github.com/Dohppak/MIDI_Emotion_Classification)
+* [Code for classification](https://github.com/Dohppak/EMOPIA_cls)
 * [Code for generation](https://github.com/annahung31/EMOPIA)
 
 
@@ -124,7 +124,7 @@ The following table shows the number of clips and their average length for each 
 
 ## Emotion Classification
 
-For the classification codes, please refer to [SeungHeon's repository](https://github.com/Dohppak/MIDI_Emotion_Classification).
+For the classification codes, please refer to [SeungHeon's repository](https://github.com/Dohppak/EMOPIA_cls).
 
 The pre-trained model weights are also in the repository.
 
@@ -264,6 +264,23 @@ The pre-trained model weights are also in the repository.
   </tfoot>
 </table>
 
+
+## Authors and Affiliations
+
+* Hsiao-Tzu (Anna) Hung   
+Research Assistant @ Academia Sinica / MS CSIE student @National Taiwan University   
+r08922a20@csie.ntu.edu.tw  
+[website](https://annahung31.github.io/), [LinkenIn](https://www.linkedin.com/in/hsiao-tzu-%EF%BC%88anna%EF%BC%89-hung-09829513a/). 
+
+* Joann Ching  
+Research Assistant @ Academia Sinica  
+joann8512@gmail.com  
+[website](https://joann8512.github.io/JoannChing.github.io/)
+
+* Yi-Hsuan Yang  
+Chief Music Scientist @ Taiwan AI Labs / Associate Research Fellow @ Academia Sinica  
+affige@gmail.com, yhyang@ailabs.tw  
+[website](http://mac.citi.sinica.edu.tw/~yang/)   
 
 
 ## Cite this dataset
