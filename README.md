@@ -3,7 +3,7 @@
 This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation**. The paper has been accepted by International Society for Music Information Retrieval Conference 2021.
 
 - [Demo Page](https://annahung31.github.io/EMOPIA/)
-- [Dataset at Zenodo (Coming soon)]()
+- [Dataset at Zenodo](https://zenodo.org/record/5090631#.YPPo-JMzZz8)
 
 * Note: We release the transcribed MIDI files. As for the audio part, due to the copyright issue, we will only release the YouTube ID of the tracks and the timestamp of them. You might use [open source crawler](https://github.com/ytdl-org/youtube-dl) to get the audio file.
 
