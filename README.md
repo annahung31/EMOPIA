@@ -5,7 +5,7 @@ This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For
 - [Demo Page](https://annahung31.github.io/EMOPIA/)
 - [Dataset at Zenodo (Coming soon)]()
 
-
+* Note: We release the transcribed MIDI files. As for the audio part, due to the copyright issue, we will only release the YouTube ID of the tracks and the timestamp of them. You might use [open source crawler](https://github.com/ytdl-org/youtube-dl) to get the audio file.
 
 # Emotion Classification
 
