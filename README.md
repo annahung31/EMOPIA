@@ -33,10 +33,25 @@ For the classification models and codes, please refer to [this repo](https://git
 ## Usage
 
 ### Inference
-1. Download the checkpoints and put them into `exp/`:
-    - [Baseline](https://drive.google.com/file/d/1Q9vQYnNJ0hXBFwcxdWQgDNmzoW3MLl3h/view?usp=sharing)
-    - [no-pretrained transformer](https://drive.google.com/file/d/1ZULJgBRu2Wb3jxFmGfAHP1v_tjoryFM7/view?usp=sharing)
-    - [pretrained transformer](https://drive.google.com/file/d/19Seq18b2JNzOamEQMG1uarKjj27HJkHu/view?usp=sharing)
+1. Download the checkpoints and put them into `exp/`
+    * Manually:  
+        - [Baseline](https://drive.google.com/file/d/1Q9vQYnNJ0hXBFwcxdWQgDNmzoW3MLl3h/view?usp=sharing)
+        - [no-pretrained transformer](https://drive.google.com/file/d/1ZULJgBRu2Wb3jxFmGfAHP1v_tjoryFM7/view?usp=sharing)
+        - [pretrained transformer](https://drive.google.com/file/d/19Seq18b2JNzOamEQMG1uarKjj27HJkHu/view?usp=sharing)
+
+    * By commend:  
+        ```
+        #baseline:
+        gdown --id 1Q9vQYnNJ0hXBFwcxdWQgDNmzoW3MLl3h --output exp/baseline.zip
+
+        # no-pretrained transformer
+        gdown --id 1ZULJgBRu2Wb3jxFmGfAHP1v_tjoryFM7 --output exp/no-pretrained_transformer.zip
+
+        # pretrained transformer
+        gdown --id 19Seq18b2JNzOamEQMG1uarKjj27HJkHu --output exp/pretrained_transformer.zip
+        ```
+
+
 
 2. Inference options:
 
