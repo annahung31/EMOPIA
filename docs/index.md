@@ -277,6 +277,16 @@ Research Assistant @ Academia Sinica
 joann8512@gmail.com  
 [website](https://joann8512.github.io/JoannChing.github.io/)
 
+* Seungheon Doh 
+Ph.D Student @ Music and Audio Computing Lab, KAIST  
+seungheondoh@kaist.ac.kr  
+[website](https://github.com/dohppak), [LinkenIn](https://www.linkedin.com/in/dohppak/) 
+
+* Juhan Nam
+associate professor @ KAIST
+juhan.nam@kaist.ac.kr  
+[Website](https://mac.kaist.ac.kr/~juhan/)
+ 
 * Yi-Hsuan Yang  
 Chief Music Scientist @ Taiwan AI Labs / Associate Research Fellow @ Academia Sinica  
 affige@gmail.com, yhyang@ailabs.tw  
