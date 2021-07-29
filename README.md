@@ -102,7 +102,12 @@ For the classification models and codes, please refer to [this repo](https://git
 
         python main_cp.py --path_train_data emopia --exp_name YOUR_EXP_NAME --load_ckt 0309-1857 --load_ckt_loss 30
 
+### Baseline
+1. The baseline code is based on the work of [Learning to Generate Music with Sentiment](https://github.com/lucasnfe/music-sentneuron)
 
+2. According to the author, the model works best when it is trained with 4096 neurons of LSTM, but takes 12 days for training. Therefore, due to the limit of computational resource, we used the size of 512 neurons instead of 4096.
+
+3. In order to use this as evaluation against our model, the target emotion classes is expanded to 4Q instead of just positive/negative.
 
 ## Authors
 
