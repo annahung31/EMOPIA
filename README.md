@@ -8,11 +8,8 @@ This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For
 * Note: We release the transcribed MIDI files. As for the audio part, due to the copyright issue, we will only release the YouTube ID of the tracks and the timestamp of them. You might use [open source crawler](https://github.com/ytdl-org/youtube-dl) to get the audio file.
 
 
-## How to use EMOPIA by MusPy
-#[MusPy](https://salu133445.github.io/muspy/index.html) is an open source Python library for symbolic music generation. It provides essential tools for developing a music generation system, including dataset management, data I/O, data preprocessing and model evaluation.  
-#Let's get started!
-#1. New a folder to save the dataset, for example `data/`, the zip files will be saved indside of it.  
-Coming soon!
+## Use EMOPIA by MusPy
+Coming soon!  
 
 
 # Emotion Classification
