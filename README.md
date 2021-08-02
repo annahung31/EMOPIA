@@ -7,6 +7,14 @@ This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For
 
 * Note: We release the transcribed MIDI files. As for the audio part, due to the copyright issue, we will only release the YouTube ID of the tracks and the timestamp of them. You might use [open source crawler](https://github.com/ytdl-org/youtube-dl) to get the audio file.
 
+
+## How to use EMOPIA by MusPy
+[MusPy](https://salu133445.github.io/muspy/index.html) is an open source Python library for symbolic music generation. It provides essential tools for developing a music generation system, including dataset management, data I/O, data preprocessing and model evaluation.  
+Let's get started!
+1. New a folder to save the dataset, for example `data/`, the zip files will be saved indside of it.  
+
+
+
 # Emotion Classification
 
 For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/EMOPIA_cls).
@@ -39,7 +47,7 @@ For the classification models and codes, please refer to [this repo](https://git
         - [no-pretrained transformer](https://drive.google.com/file/d/1ZULJgBRu2Wb3jxFmGfAHP1v_tjoryFM7/view?usp=sharing)
         - [pretrained transformer](https://drive.google.com/file/d/19Seq18b2JNzOamEQMG1uarKjj27HJkHu/view?usp=sharing)
 
-    * By commend:  
+    * By commend: (install gdown: `pip install gdown`) 
         ```
         #baseline:
         gdown --id 1Q9vQYnNJ0hXBFwcxdWQgDNmzoW3MLl3h --output exp/baseline.zip
@@ -76,7 +84,7 @@ For the classification models and codes, please refer to [this repo](https://git
     ```
 
 ### Train the model by yourself
-1. Download the data files from [HERE]().
+1. Prepare the data follow the [steps](https://github.com/annahung31/EMOPIA/tree/main/dataset).
     
 
 2. training options:  
