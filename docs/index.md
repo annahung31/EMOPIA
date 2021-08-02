@@ -124,6 +124,32 @@ The following table shows the number of clips and their average length for each 
 
 ## Emotion Classification
 
+* We performed emotion classification task in audio domain and symbolic domain, respectively.
+
+* Our baseline approach is logistic regression using handcraft features. For the symbolic domain, note length, velocity, beat note density, and key were used, and for the audio domain, an average of 20 dimensions of mel-frequency cepstral co-efficient(MFCC) vectors were used.
+
+<div align="center">
+  <img src="./img/representation.png" width=1000x>
+  <figcaption><strong>Fig.4</strong> symbolic-domain and audio domain representation.</figcaption>
+</div>
+
+* The input representation of the deep learning appraoch uses mel-spectrogram for the audio domain and midi-like and remi for the symbolic domain.
+
+<div align="center">
+  <img src="./img/results.png" width=1000x>
+  <figcaption><strong>Fig.5</strong> results of emotion classification.</figcaption>
+</div>
+
+* We adopt the [A Structured Self-attentive Sentence Embedding](https://arxiv.org/abs/1703.03130) for symbolic-domain classification network, and adopt the [Short-chunk CNN + Residual](https://arxiv.org/abs/2006.00751) for audio-domain classification network.
+
+
+<div align="center">
+  <img src="./img/example.png" width=1000x>
+  <figcaption><strong>Fig.6</strong> inference example of Sakamoto: Merry Christmas Mr. Lawrence</figcaption>
+</div>
+
+* An inference example is Sakamoto: [Sakamoto: Merry Christmas Mr. Lawrence](https://www.youtube.com/watch?v=zOUlPrCRlVMab_channel=RyuichiSakamoto-Topic). The emotional change in the first half and second half of the song is impressive. The front part is clearly low arousal and the second half turns into high arousal. Impressively, audio and mid classifiers return different inference results.
+
 For the classification codes, please refer to [SeungHeon's repository](https://github.com/SeungHeonDoh/EMOPIA_cls).
 
 The pre-trained model weights are also in the repository.
@@ -136,7 +162,7 @@ The pre-trained model weights are also in the repository.
 
 <div align="center">
   <img src="./img/cp.png" width=500x>
-  <figcaption><strong>Fig.4</strong> Compound word with emotion token
+  <figcaption><strong>Fig.7</strong> Compound word with emotion token
   </figcaption>
 </div> <br>
 
@@ -280,7 +306,7 @@ joann8512@gmail.com
 * Seungheon Doh 
 Ph.D Student @ Music and Audio Computing Lab, KAIST  
 seungheondoh@kaist.ac.kr  
-[website](https://github.com/SeungHeonDoh), [LinkenIn](https://www.linkedin.com/in/dohppak/) 
+[website](https://seungheondoh.github.io/), [LinkenIn](https://www.linkedin.com/in/dohppak/) 
 
 * Juhan Nam
 associate professor @ KAIST
