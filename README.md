@@ -17,7 +17,7 @@ Let's get started!
 
 # Emotion Classification
 
-For the classification models and codes, please refer to [this repo](https://github.com/Dohppak/EMOPIA_cls).
+For the classification models and codes, please refer to [this repo](https://github.com/SeungHeonDoh/EMOPIA_cls).
 
 
 # Conditional Generation
@@ -119,7 +119,7 @@ For the classification models and codes, please refer to [this repo](https://git
 
 ## Authors
 
-The paper is a co-working project with [Joann](https://github.com/joann8512), [SeungHeon](https://github.com/Dohppak) and Nabin. This repository is mentained by [Joann](https://github.com/joann8512) and me.
+The paper is a co-working project with [Joann](https://github.com/joann8512), [SeungHeon](https://github.com/SeungHeonDoh) and Nabin. This repository is mentained by [Joann](https://github.com/joann8512) and me.
 
 
 ## License
