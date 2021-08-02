@@ -6,7 +6,7 @@ The detail of the methodology  for  building  the  dataset please refer to our p
 
 * [Arxiv (coming soon)](https://annahung31.github.io/EMOPIA/)
 * [Dataset on Zenodo](https://zenodo.org/record/5090631#.YPPo-JMzZz8)
-* [Code for classification](https://github.com/Dohppak/EMOPIA_cls)
+* [Code for classification](https://github.com/SeungHeonDoh/EMOPIA_cls)
 * [Code for generation](https://github.com/annahung31/EMOPIA)
 
 
@@ -124,7 +124,7 @@ The following table shows the number of clips and their average length for each 
 
 ## Emotion Classification
 
-For the classification codes, please refer to [SeungHeon's repository](https://github.com/Dohppak/EMOPIA_cls).
+For the classification codes, please refer to [SeungHeon's repository](https://github.com/SeungHeonDoh/EMOPIA_cls).
 
 The pre-trained model weights are also in the repository.
 
@@ -280,7 +280,7 @@ joann8512@gmail.com
 * Seungheon Doh 
 Ph.D Student @ Music and Audio Computing Lab, KAIST  
 seungheondoh@kaist.ac.kr  
-[website](https://github.com/dohppak), [LinkenIn](https://www.linkedin.com/in/dohppak/) 
+[website](https://github.com/SeungHeonDoh), [LinkenIn](https://www.linkedin.com/in/dohppak/) 
 
 * Juhan Nam
 associate professor @ KAIST
