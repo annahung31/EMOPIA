@@ -4,7 +4,7 @@ EMOPIA  (pronounced  ‘yee-mò-pi-uh’)  dataset is a  shared multi-modal (aud
 
 The detail of the methodology  for  building  the  dataset please refer to our paper.      
 
-* [Arxiv (coming soon)](https://annahung31.github.io/EMOPIA/)
+* [Paper on Arxiv](https://arxiv.org/abs/2108.01374)
 * [Dataset on Zenodo](https://zenodo.org/record/5090631#.YPPo-JMzZz8)
 * [Code for classification](https://github.com/SeungHeonDoh/EMOPIA_cls)
 * [Code for generation](https://github.com/annahung31/EMOPIA)
