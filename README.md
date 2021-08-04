@@ -10,7 +10,30 @@ This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For
 
 
 ## Use EMOPIA by MusPy
-Coming soon!  
+1. install muspy
+```
+pip install muspy
+```
+2. Use it in your script
+
+```
+import muspy
+
+emopia = muspy.EMOPIADataset("data/emopia/", download_and_extract=True)
+emopia.convert()
+music = emopia[0]
+print(music.annotations[0].annotation)
+```
+You can get the label of the piece of music:
+
+```
+{'emo_class': '1', 'YouTube_ID': '0vLPYiPN7qY', 'seg_id': '0'}
+```
+* `emo_class`: ['1', '2', '3', '4']
+* `YouTube_ID`: the YouTube ID of this piece of music
+* `seg_id`: means this piece of music is the `i`th piece we take from this song. (zero-based). 
+
+For more usage please refer to [MusPy](https://github.com/salu133445/muspy).
 
 
 # Emotion Classification
