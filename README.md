@@ -147,8 +147,10 @@ The paper is a co-working project with [Joann](https://github.com/joann8512), [S
 
 
 ## License
-The EMOPIA dataset is released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). It is provided primarily for research purposes and is prohibited to be used for commercial purposes. When sharing your result based on EMOPIA, any act that defames the original music owner is strictly prohibited.
+The EMOPIA dataset is released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). It is provided primarily for research purposes and is prohibited to be used for commercial purposes. When sharing your result based on EMOPIA, any act that defames the original music owner is strictly prohibited.  
 
+
+The hand drawn piano in the logo comes from [Adobe stock](https://stock.adobe.com/tw/images/one-line-piano-instrument-design-hand-drawn-minimalistic-style-vector-illustration/327942843). The author is [Burak](https://stock.adobe.com/tw/contributor/206697762/burak?load_type=author&prev_url=detail). I purchased it under [standard](https://stock.adobe.com/tw/license-terms) license.
 
 ## Cite the dataset
 
