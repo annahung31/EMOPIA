@@ -1,4 +1,7 @@
-# EMOPIA
+
+<div align="center">
+    <img src=./docs/img/emopia.png width=200x>
+</div>
 
 This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For Emotion Recognition and Emotion-based Music Generation**. The paper has been accepted by International Society for Music Information Retrieval Conference 2021.
 
