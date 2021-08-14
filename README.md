@@ -65,6 +65,15 @@ For the classification models and codes, please refer to [this repo](https://git
 ## Usage
 
 ### Inference
+
+**Option 1:**  
+
+You can directly run the [generate script](./workspace/transformer/generate.ipynb) to generate pieces of musics and listen to them.
+
+
+**Option 2:**  
+Or you might follow the steps as below.
+
 1. Download the checkpoints and put them into `exp/`
     * Manually:  
         - [Baseline](https://drive.google.com/file/d/1Q9vQYnNJ0hXBFwcxdWQgDNmzoW3MLl3h/view?usp=sharing)
