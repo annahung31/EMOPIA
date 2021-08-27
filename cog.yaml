@@ -1,0 +1,22 @@
+predict: "predict.py:Predictor"
+build:
+  gpu: true
+  system_packages:
+    - "ffmpeg"
+    - "fluidsynth"
+  python_packages:
+    - "torch==1.7.0"
+    - "scikit-learn==0.24.1"
+    - "seaborn==0.11.1"
+    - "numpy==1.19.5"
+    - "miditoolkit==0.1.14"
+    - "pandas==1.1.5"
+    - "tqdm==4.62.2"
+    - "matplotlib==3.4.3"
+    - "scipy==1.7.1"
+    - "midiSynth==0.3"
+    - "wheel==0.37.0"
+    - "ipdb===0.13.9"
+    - "pyfluidsynth==1.3.0"
+  pre_install:
+    - "pip install pytorch-fast-transformers==0.4.0"  # needs to be installed after the main pip install
