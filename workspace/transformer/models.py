@@ -58,7 +58,7 @@ class PositionalEncoding(nn.Module):
 
 
 class TransformerModel(nn.Module):
-    def __init__(self, n_token, is_training=True, in_attn=0, data_parallel=False):
+    def __init__(self, n_token, is_training=True, data_parallel=False):
         super(TransformerModel, self).__init__()
         self.data_parallel = data_parallel
         # --- params config --- #
@@ -74,8 +74,7 @@ class TransformerModel(nn.Module):
             self.emb_sizes = [128, 256, 64, 32, 512, 128, 128, 128]
         elif len(self.n_token) == 9:
             self.emb_sizes = [128, 256, 64, 32, 512, 128, 128, 128, 128]   #128
-        # self.num_emo_class = 2
-        self.in_attn = True if in_attn > 0 else False
+
         # --- modules config --- #
         # embeddings
         print('>>>>>:', self.n_token)
@@ -94,8 +93,7 @@ class TransformerModel(nn.Module):
         
         # linear 
         self.in_linear = nn.Linear(np.sum(self.emb_sizes), self.d_model)
-        # self.emo_linear = nn.Linear(D_MODEL, self.num_emo_class)
-        # self.cls_loss = nn.CrossEntropyLoss(reduction = 'mean')
+
          # encoder
         if is_training:
             # encoder (training)
@@ -137,12 +135,10 @@ class TransformerModel(nn.Module):
 
 
     def forward(self, x, target, loss_mask):
-        # print(x[:, 0, -1])
-        
+
 
         h, y_type, _  = self.forward_hidden(x, is_training=True)
         
-        #h, y_type  = self.forward_hidden(x)
 
         if len(self.n_token) == 9:
             y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, y_key, _, emo_embd = self.forward_output(h, target)
@@ -150,14 +146,6 @@ class TransformerModel(nn.Module):
             y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, _, emo_embd = self.forward_output(h, target)
         
 
-        '''
-        
-        emo_target = x[:, 0, -1]
-        rr = torch.tensor([1] * x.shape[0])
-        emo_target = torch.sub(emo_target, rr.cuda())
-        
-        emo_cls_loss = self.emo_cls(emo_embd, emo_target)
-        '''
 
         # reshape (b, s, f) -> (b, f, s)
         y_tempo     = y_tempo[:, ...].permute(0, 2, 1)
@@ -289,15 +277,8 @@ class TransformerModel(nn.Module):
         if is_training:
             # mask
             attn_mask = TriangularCausalMask_local(pos_emb.size(1), device=x.device)
-            # self.get_encoder('encoder')
-            # self.transformer_encoder.cuda()
 
-            if self.in_attn:
-                emo_embd = pos_emb[:, 0:1, :]
-                # emo_embd = emo_embd.repeat(1, emb_linear.shape[1], 1)
-                h, layer_outputs = self.transformer_encoder(pos_emb, attn_mask, emb_emotion=emo_embd) #emb_linear[:, 0:1, :]
-            else:
-                h, layer_outputs = self.transformer_encoder(pos_emb, attn_mask) # y: b x s x d_model
+            h, layer_outputs = self.transformer_encoder(pos_emb, attn_mask) # y: b x s x d_model
             
 
             # project type
@@ -317,11 +298,6 @@ class TransformerModel(nn.Module):
             
             return h, y_type, memory
 
-    def emo_cls(self, emo_embd, emo_target):
-        
-        out = self.emo_linear(emo_embd)
-        loss = self.cls_loss(out, emo_target)
-        return loss
 
     def forward_output(self, h, y):
         '''
@@ -480,76 +456,10 @@ class TransformerModel(nn.Module):
         return next_arr, y_emotion
 
 
-    def inference_during_training(self, dictionary, emotion_tag):
-        event2word, word2event = dictionary
-        classes = word2event.keys()
-
-        target_emotion = [0, 0, 0, 1, 0, 0, 0, emotion_tag]
-        
-        init = torch.tensor([
-            target_emotion,  # emotion
-            [0, 0, 1, 2, 0, 0, 0, 0] # bar
-        ])
-
-        cnt_token = len(init)
-        final_res = []
-        memory = None
-        h = None
-        
-        cnt_bar = 1
-        init_t = init.long().cuda()
-
-        input_0 = init_t[0, :].unsqueeze(0).unsqueeze(0)
-        _, _, memory = self.forward_hidden(
-                    input_0, memory, is_training=False)
-
-        final_res = input_0
-
-        for step in range(1, init.shape[0]):
-            
-            input_ = init_t[step, :].unsqueeze(0).unsqueeze(0)
-            
-            
-            final_res = torch.cat((final_res, input_), 0)
-            
-            h, y_type, memory = self.forward_hidden(
-                    input_, memory, is_training=False)
-
-
-        while(final_res.shape[0] < 2000):
-            next_arr, y_emotion = self.froward_output_sampling(h, y_type, is_training=True)
-            input_ = next_arr.long().cuda()
-            input_  = input_.unsqueeze(0).unsqueeze(0)
-            
-            final_res = torch.cat((final_res,input_), 0)
-            
-            h, y_type, memory = self.forward_hidden(
-                input_, memory, is_training=False)
-            
-            # end of sequence
-            if word2event['type'][next_arr[3].item()] == 'EOS':
-                break
-            
-            if word2event['bar-beat'][next_arr[2].item()] == 'Bar':
-                cnt_bar += 1
-            
-            
-        final_res = final_res.squeeze(1)
-        if word2event['type'][final_res[-1][3].item()] != 'EOS':
-            EOS_token = torch.tensor([0,0,0,0,0,0,0,0]).unsqueeze(0).long().cuda()
-            final_res = torch.cat((final_res, EOS_token), 0)
-            
-        print('\n--------[Done]--------')
-        final_res = final_res.long().cuda()
-        print('generate:', final_res.shape)
-        return final_res
-
-
-    
 
 
 
-    def inference_from_scratch(self, dictionary, emotion_tag, key_tag=None, n_token=8):
+    def inference_from_scratch(self, dictionary, emotion_tag, key_tag=None, n_token=8, display=True):
         event2word, word2event = dictionary
         
 
@@ -610,7 +520,8 @@ class TransformerModel(nn.Module):
             if n_token == 9 and  key_tag is None:
                 # Emotion token
                 step = 0
-                print_word_cp(init[step, :])
+                if display:
+                    print_word_cp(init[step, :])
                 input_ = init_t[step, :].unsqueeze(0).unsqueeze(0)
                 final_res.append(init[step, :][None, ...])
                 h, y_type, memory = self.forward_hidden(
@@ -623,7 +534,8 @@ class TransformerModel(nn.Module):
 
                 generated_key = next_arr[-1]  
                 final_res.append(next_arr[None, ...])
-                print_word_cp(next_arr)
+                if display:
+                    print_word_cp(next_arr)
                 input_ = torch.from_numpy(next_arr).long().cuda()
                 input_  = input_.unsqueeze(0).unsqueeze(0)
                 h, y_type, memory = self.forward_hidden(
@@ -660,8 +572,10 @@ class TransformerModel(nn.Module):
                     return None, None
                     
                 final_res.append(next_arr[None, ...])
-                print('bar:', cnt_bar, end= '  ==')
-                print_word_cp(next_arr)
+                
+                if display:
+                    print('bar:', cnt_bar, end= '  ==')
+                    print_word_cp(next_arr)
                 
                 # forward
                 input_ = torch.from_numpy(next_arr).long().cuda()

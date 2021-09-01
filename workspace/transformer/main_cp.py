@@ -36,15 +36,14 @@ parser.add_argument("--task_type",default="4-cls",type=str,choices=['4-cls', 'Ar
 parser.add_argument("--gid", default= 0, type=int)
 parser.add_argument("--data_parallel", default= 0, type=int)
 
-parser.add_argument("--exp_name", default='0422-1637' , type=str)
-parser.add_argument("--load_ckt", default="0309-1857", type=str)   #pre-train model
-parser.add_argument("--load_ckt_loss", default="30", type=str)     #pre-train model
+parser.add_argument("--exp_name", default='output' , type=str)
+parser.add_argument("--load_ckt", default="none", type=str)   #pre-train model
+parser.add_argument("--load_ckt_loss", default="25", type=str)     #pre-train model
 parser.add_argument("--path_train_data", default='emopia', type=str)  
 parser.add_argument("--data_root", default='../dataset/co-representation/', type=str)
 parser.add_argument("--load_dict", default="more_dictionary.pkl", type=str)
 parser.add_argument("--init_lr", default= 0.00001, type=float)
 # inference config
-### python main-cp.py --mode inference --load_ckt 0309-1857 --load_ckt_loss 50 --num_songs 5 --emo_tag 1
 
 parser.add_argument("--num_songs", default=5, type=int)
 parser.add_argument("--emo_tag", default=1, type=int)
@@ -242,11 +241,11 @@ def train():
 
     if args.data_parallel > 0 and torch.cuda.count() > 1:
         print("Let's use", torch.cuda.device_count(), "GPUs!")
-        net = TransformerModel(n_class, in_attn=args.in_attn, data_parallel=True)
+        net = TransformerModel(n_class, data_parallel=True)
         net = nn.DataParallel(net)
 
     else:
-        net = TransformerModel(n_class, in_attn=args.in_attn)
+        net = TransformerModel(n_class)
 
     net.cuda()
     net.train()
@@ -427,7 +426,7 @@ def generate():
         state_dict = torch.load(path_saved_ckpt)
         new_state_dict = OrderedDict()
         for k, v in state_dict.items():
-            name = k[7:] # remove `module.`，表面从第7个key值字符取到最后一个字符，正好去掉了module.
+            name = k[7:] 
             new_state_dict[name] = v
             
         net.load_state_dict(new_state_dict)
