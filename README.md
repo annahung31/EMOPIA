@@ -7,6 +7,7 @@ This is the official repository of **EMOPIA: A Multi-Modal Pop Piano Dataset For
 
 - [Paper on Arxiv](https://arxiv.org/abs/2108.01374)
 - [Demo Page](https://annahung31.github.io/EMOPIA/)
+- [Interactive demo and Docker image on Replicate](https://replicate.ai/annahung31/emopia)
 - [Dataset at Zenodo](https://zenodo.org/record/5090631#.YPPo-JMzZz8)
 
 * Note: We release the transcribed MIDI files. As for the audio part, due to the copyright issue, we will only release the YouTube ID of the tracks and the timestamp of them. You might use [open source crawler](https://github.com/ytdl-org/youtube-dl) to get the audio file.
