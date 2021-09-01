@@ -137,7 +137,7 @@ class TransformerModel(nn.Module):
     def forward(self, x, target, loss_mask):
 
 
-        h, y_type, _  = self.forward_hidden(x, is_training=True)
+        h, y_type = self.forward_hidden(x, is_training=True)
         
 
         if len(self.n_token) == 9:
@@ -278,14 +278,15 @@ class TransformerModel(nn.Module):
             # mask
             attn_mask = TriangularCausalMask_local(pos_emb.size(1), device=x.device)
 
-            h, layer_outputs = self.transformer_encoder(pos_emb, attn_mask) # y: b x s x d_model
+            h = self.transformer_encoder(pos_emb, attn_mask) # y: b x s x d_model
             
 
             # project type
             y_type = self.proj_type(h)
 
-            return h, y_type, layer_outputs
-            #return h, y_type
+
+            return h, y_type
+
         else:
             pos_emb = pos_emb.squeeze(0)
             
@@ -328,12 +329,6 @@ class TransformerModel(nn.Module):
         else:
             return  y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, y_, emo_embd
 
-
-    def forward_embd(self,x, y):
-        h, y_type, layer_outputs  = self.forward_hidden(x)
-        _, _, _, _, _, _, _, layer_8.y_ = self.forward_output(layer_outputs[7], y)
-        
-        return layer_8.y_
 
 
 
