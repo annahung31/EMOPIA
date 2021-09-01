@@ -141,9 +141,9 @@ class TransformerModel(nn.Module):
         
 
         if len(self.n_token) == 9:
-            y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, y_key, _, emo_embd = self.forward_output(h, target)
+            y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, y_key, emo_embd = self.forward_output(h, target)
         else:
-            y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, _, emo_embd = self.forward_output(h, target)
+            y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, emo_embd = self.forward_output(h, target)
         
 
 
@@ -324,10 +324,10 @@ class TransformerModel(nn.Module):
         if len(self.n_token) == 9:
             y_key = self.proj_key(y_)
         
-            return  y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, y_key, y_, emo_embd
+            return  y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, y_key, emo_embd
 
         else:
-            return  y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, y_, emo_embd
+            return  y_tempo, y_chord, y_barbeat, y_pitch, y_duration, y_velocity, y_emotion, emo_embd
 
 
 
