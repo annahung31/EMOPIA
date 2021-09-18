@@ -128,7 +128,6 @@ if args.data_parallel == 0:
 
 
 class PEmoDataset(Dataset):
-    ''' Dataset for loading and preprocessing the COVID19 dataset '''
     def __init__(self,
                  
                  task_type):
