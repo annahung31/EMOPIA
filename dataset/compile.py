@@ -118,10 +118,6 @@ if __name__ == '__main__':
         mask = np.concatenate(
             [np.ones(seq_len), np.zeros(MAX_LEN-seq_len)])
 
-        # collect
-        if x.shape != (1024, 8):
-            print(x.shape)
-            exit()
         x_list.append(x)
         y_list.append(y)
         mask_list.append(mask)
