@@ -123,19 +123,12 @@ if __name__ == '__main__':
         y = np.concatenate([y, pad], axis=0)
         mask = np.concatenate(
             [np.ones(seq_len), np.zeros(MAX_LEN-seq_len)])
-<<<<<<< Updated upstream
         
         # collect
         if x.shape != (1024, 8):
             print(x.shape)
             exit()
         
-=======
-       # collect
-        if x.shape != (1024, 8):
-            print(x.shape)
-            exit()
->>>>>>> Stashed changes
         x_list.append(x)
         y_list.append(y)
         mask_list.append(mask)
