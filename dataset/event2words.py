@@ -82,9 +82,9 @@ def build_dict(path_root, path_indir, eventfiles, path_dict):
 
 if __name__ == '__main__':
     # paths
-    path_root = 'data/'
+    path_root = '.'
     path_indir = os.path.join(path_root, 'events')
-    path_outdir =  os.path.join(path_root, 'words')
+    path_outdir =  os.path.join(path_root, 'wordstemp')
     path_dict = os.path.join(path_root, 'dictionary.pkl')
     os.makedirs(path_outdir, exist_ok=True)
 
@@ -96,6 +96,11 @@ if __name__ == '__main__':
         extension=('pkl'))
     n_files = len(eventfiles)
     print('num fiels:', n_files)
+
+    class_keys = pickle.load(
+        open(os.path.join(path_indir, eventfiles[0]), 'rb'))[0].keys()
+    print('class keys:', class_keys)
+
 
     # --- build dictionary --- #
     # all files

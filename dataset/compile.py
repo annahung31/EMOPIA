@@ -72,7 +72,7 @@ def traverse_dir(
 
 if __name__ == '__main__':
     # paths
-    path_root = './'
+    path_root = '.'
     path_indir = os.path.join( path_root, 'words')
 
     # load all words
@@ -93,8 +93,14 @@ if __name__ == '__main__':
     for fidx in range(n_files):
         print('--[{}/{}]-----'.format(fidx+1, n_files))
         file = wordfiles[fidx]
-        words = np.load(file)
-        
+        print(file)
+        try:
+            words = np.load(file)
+        except:
+            print(fidx)
+            
+            import ipdb
+            ipdb.set_trace()    
         num_words = len(words)
 
         eos_arr = words[-1][None, ...]
@@ -117,12 +123,19 @@ if __name__ == '__main__':
         y = np.concatenate([y, pad], axis=0)
         mask = np.concatenate(
             [np.ones(seq_len), np.zeros(MAX_LEN-seq_len)])
+<<<<<<< Updated upstream
         
         # collect
         if x.shape != (1024, 8):
             print(x.shape)
             exit()
         
+=======
+       # collect
+        if x.shape != (1024, 8):
+            print(x.shape)
+            exit()
+>>>>>>> Stashed changes
         x_list.append(x)
         y_list.append(y)
         mask_list.append(mask)
