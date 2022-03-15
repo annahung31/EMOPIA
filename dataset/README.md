@@ -17,12 +17,18 @@ The data pre-processing used in our paper is basically the same as [Compound-wor
 
 If you want to make use of EMOPIA along with other dataset, you might need to prepare your own dictionary. In that way, you need `REMI_tokens` of each midi file.  
 
-1. Download [EMOPIA 2.1](https://zenodo.org/record/5151045#.YQaNfVMzZoQ). Inside the folders, `CP_events` are the CP events processed using [Compound-word-transformer](https://github.com/YatingMusic/compound-word-transformer/blob/main/dataset/Dataset.md) process. 
-2. Put `CP_events` in your `events` folder.
-3. Put other dataset's event files also in the `events` folder.
-3. Along with other dataset's event files, run the following scripts:
+1. Download [EMOPIA 2.1](https://zenodo.org/record/5151045#.YQaNfVMzZoQ). Inside the folders, `corpus` are the CP events processed using [Compound-word-transformer](https://github.com/YatingMusic/compound-word-transformer/blob/main/dataset/Dataset.md) process. 
+2. Put `corpus` in your `corpus_folder` folder.
+3. Put other dataset's corpus files also in the `corpus_folder` folder.
+4. Run the following scripts:
 
-a. transfer the events to CP words, and build the dictionary.
+a. transfer the corpus file to CP events. (Please change the folder path to your own path.)
+
+```
+python corpus2events.py
+```
+
+b. transfer the events to CP words, and build the dictionary.
 ```
 python event2words.py
 ```
