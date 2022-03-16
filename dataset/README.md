@@ -11,28 +11,29 @@ unzip co-representation.zip
 
 
 ## If you want to prepare data from scratch...
-The data pre-processing used in our paper is basically the same as [Compound-word-transformer](https://github.com/YatingMusic/compound-word-transformer/blob/main/dataset/Dataset.md). So please refer to this repository to prepare data from scratch.
+The data pre-processing used in our paper is basically the same as [Compound-word-transformer](https://github.com/YatingMusic/compound-word-transformer/blob/main/dataset/Dataset.md). The difference is the emotion token part.
 
-## If you want to build your own dictionary and build CP words....
 
-If you want to make use of EMOPIA along with other dataset, you might need to prepare your own dictionary. In that way, you need `REMI_tokens` of each midi file.  
+1. Run step 1-3 of [Compound-word-transformer dataset processing](https://github.com/YatingMusic/compound-word-transformer/blob/main/dataset/Dataset.md).
+2. Change the path in the following scripts and run:
 
-1. Download [EMOPIA 2.1](https://zenodo.org/record/5151045#.YQaNfVMzZoQ). Inside the folders, `corpus` are the corpus files processed using [Compound-word-transformer](https://github.com/YatingMusic/compound-word-transformer/blob/main/dataset/Dataset.md) process. 
-2. Put `corpus` in your `corpus_folder` folder.
-3. Put other dataset's corpus files also in the `corpus_folder` folder.
-4. Run the following scripts:
+a. quantize everything, add EOS, and prepare the emotion label from the filename.
 
-a. transfer the corpus file to CP events. (Please change the folder path to your own path.)
+```
+python midi2corpus.py
+```
+
+b. transfer the corpus file to CP events.
 
 ```
 python corpus2events.py
 ```
 
-b. transfer the events to CP words, and build the dictionary.
+c. transfer the events to CP words, and build the dictionary.
 ```
 python event2words.py
 ```
-b. Compile the words file to npz file for training.
+d. Compile the words file to npz file for training.
 ```
 python compile.py
 ```
