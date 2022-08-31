@@ -64,7 +64,7 @@ task_type = args.task_type
 ###--- data ---###
 path_data_root = args.data_root
 
-path_train_data = os.path.join(path_data_root, args.path_train_data + '_data_linear.npz')
+path_train_data = os.path.join(path_data_root, args.path_train_data + '_data.npz')
 path_dictionary =  os.path.join(path_data_root, args.load_dict)
 path_train_idx = os.path.join(path_data_root, args.path_train_data + '_fn2idx_map.json')
 path_train_data_cls_idx = os.path.join(path_data_root, args.path_train_data + '_data_idx.npz')
