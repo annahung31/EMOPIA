@@ -296,7 +296,7 @@ The pre-trained model weights are also in the repository.
 * Hsiao-Tzu (Anna) Hung   
 Research Assistant @ Academia Sinica / MS CSIE student @National Taiwan University   
 r08922a20@csie.ntu.edu.tw  
-[website](https://annahung31.github.io/), [LinkenIn](https://www.linkedin.com/in/hsiao-tzu-%EF%BC%88anna%EF%BC%89-hung-09829513a/). 
+[website](https://annahung31.github.io/), [LinkedIn](https://www.linkedin.com/in/hsiao-tzu-%EF%BC%88anna%EF%BC%89-hung-09829513a/). 
 
 * Joann Ching  
 Research Assistant @ Academia Sinica  
@@ -306,7 +306,7 @@ joann8512@gmail.com
 * Seungheon Doh 
 Ph.D Student @ Music and Audio Computing Lab, KAIST  
 seungheondoh@kaist.ac.kr  
-[website](https://seungheondoh.github.io/), [LinkenIn](https://www.linkedin.com/in/dohppak/) 
+[website](https://seungheondoh.github.io/), [LinkedIn](https://www.linkedin.com/in/dohppak/) 
 
 * Juhan Nam
 associate professor @ KAIST
